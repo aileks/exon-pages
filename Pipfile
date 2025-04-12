@@ -12,6 +12,7 @@ flask-migrate = "*"
 flask-cors = "*"
 flask-sqlalchemy = "*"
 flask-wtf = "*"
+flask-dotenv = "*"
 
 [dev-packages]
 
