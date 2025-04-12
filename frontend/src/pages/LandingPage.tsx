@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router';
 import useAuthStore from '@/store/useAuthStore';
 import PageContainer from '@/components/PageContainer';
 import Loading from '@/components/Loading';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 export default function LandingPage() {
   const { isAuthenticated, getUser, isLoading } = useAuthStore();
@@ -21,31 +25,38 @@ const UnauthenticatedView = () => {
   return (
     <PageContainer>
       <div className='mx-auto mb-16 max-w-3xl text-center'>
-        <h1 className='mb-6 text-5xl font-bold'>Welcome to Our Platform</h1>
+        <h1 className='mb-6 text-5xl font-bold'>Welcome to Exon Pages</h1>
+
         <p className='text-muted-foreground mb-8 text-xl'>
-          The ultimate solution for managing your projects and tasks efficiently.
+          Your solution for managing your BioLab notes, projects, and experiments.
         </p>
+
         <div className='flex flex-wrap justify-center gap-4'>
-          <a
-            href='/login'
-            className='bg-primary text-primary-foreground rounded-md px-6 py-3 font-medium transition-opacity hover:opacity-90'
+          <Button
+            size='lg'
+            asChild
           >
-            Get Started
-          </a>
-          <a
-            href='#features'
-            className='bg-secondary text-secondary-foreground rounded-md px-6 py-3 font-medium transition-opacity hover:opacity-90'
+            <Link to='/login'>Get Started</Link>
+          </Button>
+
+          <Button
+            variant='secondary'
+            size='lg'
+            asChild
           >
-            Learn More
-          </a>
+            <a href='#features'>Learn More</a>
+          </Button>
         </div>
       </div>
+
+      <Separator className='my-8' />
 
       <div
         id='features'
         className='py-8'
       >
         <h2 className='mb-12 text-center text-3xl font-bold'>Key Features</h2>
+
         <div className='grid gap-8 md:grid-cols-3'>
           <FeatureCard
             title='Seamless Integration'
@@ -72,23 +83,39 @@ const AuthenticatedView = () => {
     <PageContainer>
       <div className='mx-auto max-w-4xl'>
         <h1 className='mb-6 text-4xl font-bold'>Welcome back, {user?.username}!</h1>
-        <div className='bg-card mb-8 rounded-lg p-6 shadow-sm'>
-          <h2 className='mb-4 text-2xl font-bold'>Your Dashboard</h2>
-          <p className='text-muted-foreground mb-6'>Here's an overview of your recent activity:</p>
-          <div className='grid gap-6 md:grid-cols-2'>
-            <div className='bg-background border-border rounded border p-4'>
-              <h3 className='mb-2 font-medium'>Recent Projects</h3>
-              <p className='text-muted-foreground'>No recent projects found.</p>
+
+        <Card className='mb-8'>
+          <CardHeader>
+            <CardTitle className='text-2xl'>Your Dashboard</CardTitle>
+          </CardHeader>
+
+          <CardContent>
+            <p className='text-muted-foreground mb-6'>Here's an overview of your recent activity:</p>
+            <div className='grid gap-6 md:grid-cols-2'>
+              <Card>
+                <CardHeader>
+                  <CardTitle className='text-base font-medium'>Recent Projects</CardTitle>
+                </CardHeader>
+
+                <CardContent>
+                  <p className='text-muted-foreground'>No recent projects found.</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className='text-base font-medium'>Upcoming Tasks</CardTitle>
+                </CardHeader>
+
+                <CardContent>
+                  <p className='text-muted-foreground'>No upcoming tasks.</p>
+                </CardContent>
+              </Card>
             </div>
-            <div className='bg-background border-border rounded border p-4'>
-              <h3 className='mb-2 font-medium'>Upcoming Tasks</h3>
-              <p className='text-muted-foreground'>No upcoming tasks.</p>
-            </div>
-          </div>
-        </div>
-        <button className='bg-primary text-primary-foreground rounded px-5 py-2 font-medium transition-opacity hover:opacity-90'>
-          View All Projects
-        </button>
+          </CardContent>
+        </Card>
+
+        <Button>View All Projects</Button>
       </div>
     </PageContainer>
   );
@@ -96,9 +123,14 @@ const AuthenticatedView = () => {
 
 const FeatureCard = ({ title, description }: { title: string; description: string }) => {
   return (
-    <div className='bg-card rounded-lg p-6 shadow-sm'>
-      <h3 className='mb-3 text-xl font-bold'>{title}</h3>
-      <p className='text-muted-foreground'>{description}</p>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className='text-xl'>{title}</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <p className='text-muted-foreground'>{description}</p>
+      </CardContent>
+    </Card>
   );
 };

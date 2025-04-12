@@ -1,8 +1,17 @@
 import React, { Suspense } from 'react';
-import useAuthStore from '@/store/useAuthStore';
 import { Link } from 'react-router';
+import useAuthStore from '@/store/useAuthStore';
 import Loading from '@/components/Loading';
-import { Button } from '@/components/ui/button.tsx';
+import { Button } from '@/components/ui/button';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu';
+import { cn } from '@/lib/utils';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -10,17 +19,90 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { user, logout, isLoading } = useAuthStore();
-  console.log('User response:', user);
+
   return (
     <div className='bg-background flex min-h-screen flex-col'>
       <header className='border-border border-b'>
         <nav className='container mx-auto flex items-center justify-between px-4 py-3'>
-          <Link
-            to='/'
-            className='text-primary text-xl font-bold'
-          >
-            Exon Pages
-          </Link>
+          <div className='flex items-center gap-4'>
+            <Link
+              to='/'
+              className='text-primary text-xl font-bold'
+            >
+              Exon Pages
+            </Link>
+
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+
+                  <NavigationMenuContent>
+                    <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
+                      <li className='row-span-3'>
+                        <NavigationMenuLink asChild>
+                          <a
+                            className='from-primary/10 to-primary/20 flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none focus:shadow-md'
+                            href='/'
+                          >
+                            <div className='text-lg font-medium'>Exon Pages</div>
+                            <p className='text-muted-foreground text-sm leading-tight'>
+                              Cutting-edge biology data management platform.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <a
+                            className={cn(
+                              'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                            )}
+                            href='#'
+                          >
+                            <div className='text-sm font-medium leading-none'>DNA Analysis</div>
+                            <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
+                              Advanced tools for DNA sequence analysis.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <a
+                            className={cn(
+                              'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                            )}
+                            href='#'
+                          >
+                            <div className='text-sm font-medium leading-none'>Protein Visualization</div>
+
+                            <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
+                              Interactive 3D protein structure models.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link to='/about'>
+                    <NavigationMenuLink
+                      className={cn(
+                        'bg-background hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 group inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50'
+                      )}
+                    >
+                      About
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
 
           <div>
             {isLoading ?
@@ -31,19 +113,15 @@ export default function Layout({ children }: LayoutProps) {
 
                 <Button
                   onClick={() => logout()}
-                  className=''
                   variant='destructive'
                 >
                   Log Out
                 </Button>
               </div>
             : <div className='space-x-4'>
-                <Link
-                  to='/login'
-                  className='bg-primary text-primary-foreground rounded px-4 py-2 transition-opacity hover:opacity-90'
-                >
-                  Login
-                </Link>
+                <Button asChild>
+                  <Link to='/login'>Login</Link>
+                </Button>
               </div>
             }
           </div>
