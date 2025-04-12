@@ -3,12 +3,13 @@ import LoginForm from '@/components/auth/LoginForm';
 import RegisterForm from '@/components/auth/RegisterForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import PageContainer from '@/components/PageContainer';
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
 
   return (
-    <div className='mt-64 flex items-center justify-center bg-gray-50'>
+    <PageContainer variant='centered'>
       <Card className='w-full max-w-md shadow-lg'>
         <CardHeader className='text-center'>
           <CardTitle className='text-2xl font-bold'>
@@ -37,6 +38,6 @@ export default function AuthPage() {
           </Tabs>
         </CardContent>
       </Card>
-    </div>
+    </PageContainer>
   );
 }

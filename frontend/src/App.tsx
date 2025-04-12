@@ -3,9 +3,10 @@ import { Outlet } from 'react-router';
 import Layout from './components/Layout';
 import { ErrorBoundary } from './ErrorBoundary';
 import useAuthStore from '@/store/useAuthStore';
+import Loading from '@/components/Loading';
 
 function App() {
-  const { getUser } = useAuthStore();
+  const { getUser, isLoading } = useAuthStore();
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -15,6 +16,15 @@ function App() {
       });
     }
   }, [initialized, getUser]);
+
+  if (!initialized && isLoading) {
+    return (
+      <Loading
+        fullScreen
+        size='lg'
+      />
+    );
+  }
 
   return (
     <ErrorBoundary>

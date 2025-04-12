@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Button } from '@/components/ui/button.tsx';
+import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router';
-import apiClient from '@/lib/apiClient.ts';
+import useAuthStore from '@/store/useAuthStore';
+import Loading from '@/components/Loading';
 
 const registerSchema = z
   .object({
@@ -31,6 +33,9 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function RegisterForm() {
   const navigate = useNavigate();
+  const { register, isLoading } = useAuthStore();
+  const [formError, setFormError] = useState<string | null>(null);
+
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -43,10 +48,12 @@ export default function RegisterForm() {
 
   const onSubmit = async (data: RegisterFormValues) => {
     try {
-      await apiClient.post('/api/auth/register', data);
+      setFormError(null);
+      await register(data.username, data.email, data.password, data.confirmPassword);
       navigate('/');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setFormError(err?.data?.error || 'Registration failed. Please try again.');
     }
   };
 
@@ -56,6 +63,8 @@ export default function RegisterForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className='space-y-6'
       >
+        {formError && <div className='bg-destructive/10 text-destructive mb-4 rounded-md p-3 text-sm'>{formError}</div>}
+
         <FormField
           control={form.control}
           name='username'
@@ -66,6 +75,7 @@ export default function RegisterForm() {
                 <Input
                   placeholder='User123'
                   {...field}
+                  disabled={isLoading}
                 />
               </FormControl>
               <FormMessage />
@@ -83,6 +93,7 @@ export default function RegisterForm() {
                 <Input
                   placeholder='user123@gmail.com'
                   {...field}
+                  disabled={isLoading}
                 />
               </FormControl>
               <FormMessage />
@@ -101,6 +112,7 @@ export default function RegisterForm() {
                   type='password'
                   placeholder='••••••••••'
                   {...field}
+                  disabled={isLoading}
                 />
               </FormControl>
               <FormMessage />
@@ -119,6 +131,7 @@ export default function RegisterForm() {
                   type='password'
                   placeholder='••••••••••'
                   {...field}
+                  disabled={isLoading}
                 />
               </FormControl>
               <FormMessage />
@@ -129,8 +142,11 @@ export default function RegisterForm() {
         <Button
           type='submit'
           className='w-full'
+          disabled={isLoading}
         >
-          Register Account
+          {isLoading ?
+            <Loading size='sm' />
+          : 'Register Account'}
         </Button>
       </form>
     </Form>

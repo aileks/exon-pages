@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import useAuthStore from '@/store/useAuthStore';
+import PageContainer from '@/components/PageContainer';
+import Loading from '@/components/Loading';
 
 export default function LandingPage() {
   const { isAuthenticated, getUser, isLoading } = useAuthStore();
@@ -9,11 +11,7 @@ export default function LandingPage() {
   }, [getUser]);
 
   if (isLoading) {
-    return (
-      <div className='container mx-auto px-4 py-12 text-center'>
-        <p className='text-xl'>Loading...</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   return isAuthenticated ? <AuthenticatedView /> : <UnauthenticatedView />;
@@ -21,7 +19,7 @@ export default function LandingPage() {
 
 const UnauthenticatedView = () => {
   return (
-    <div className='container mx-auto px-4 py-12'>
+    <PageContainer>
       <div className='mx-auto mb-16 max-w-3xl text-center'>
         <h1 className='mb-6 text-5xl font-bold'>Welcome to Our Platform</h1>
         <p className='text-muted-foreground mb-8 text-xl'>
@@ -63,7 +61,7 @@ const UnauthenticatedView = () => {
           />
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 
@@ -71,7 +69,7 @@ const AuthenticatedView = () => {
   const { user } = useAuthStore();
 
   return (
-    <div className='container mx-auto px-4 py-12'>
+    <PageContainer>
       <div className='mx-auto max-w-4xl'>
         <h1 className='mb-6 text-4xl font-bold'>Welcome back, {user?.username}!</h1>
         <div className='bg-card mb-8 rounded-lg p-6 shadow-sm'>
@@ -92,7 +90,7 @@ const AuthenticatedView = () => {
           View All Projects
         </button>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

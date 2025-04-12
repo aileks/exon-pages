@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import apiClient from '@/lib/apiClient';
 
 interface User {
@@ -35,117 +34,106 @@ interface AuthActions {
 
 type AuthStore = AuthState & AuthActions;
 
-const useAuthStore = create<AuthStore>()(
-  persist(
-    set => ({
-      user: null,
-      isLoading: false,
-      error: null,
-      isAuthenticated: false,
+const useAuthStore = create<AuthStore>()(set => ({
+  user: null,
+  isLoading: false,
+  error: null,
+  isAuthenticated: false,
 
-      setLoading: isLoading => set({ isLoading }),
-      setError: error => set({ error }),
-      clearError: () => set({ error: null }),
+  setLoading: isLoading => set({ isLoading }),
+  setError: error => set({ error }),
+  clearError: () => set({ error: null }),
 
-      login: async (email, password) => {
-        try {
-          set({ isLoading: true, error: null });
+  login: async (email, password) => {
+    try {
+      set({ isLoading: true, error: null });
 
-          const user = await apiClient.post<User>('/api/auth/login', { email, password });
+      const user = await apiClient.post<User>('/api/auth/login', { email, password });
 
-          set({
-            user,
-            isAuthenticated: true,
-            isLoading: false,
-          });
-        } catch (err) {
-          const error = err as Error & ApiError;
-          set({
-            error: error.data?.error || 'Login failed',
-            isLoading: false,
-          });
-          throw err;
-        }
-      },
-
-      register: async (username, email, password, confirmPassword) => {
-        try {
-          set({ isLoading: true, error: null });
-
-          const user = await apiClient.post<User>('/api/auth/register', {
-            username,
-            email,
-            password,
-            confirmPassword,
-          });
-
-          set({
-            user,
-            isAuthenticated: true,
-            isLoading: false,
-          });
-        } catch (err) {
-          const error = err as Error & ApiError;
-          set({
-            error: error.data?.error || 'Registration failed',
-            isLoading: false,
-          });
-          throw err;
-        }
-      },
-
-      logout: async () => {
-        try {
-          set({ isLoading: true });
-
-          await apiClient.delete('/api/auth/logout');
-
-          set({
-            user: null,
-            isAuthenticated: false,
-            isLoading: false,
-          });
-        } catch (err) {
-          const error = err as Error & ApiError;
-          set({
-            error: error.data?.error || 'Logout failed',
-            isLoading: false,
-            user: null,
-            isAuthenticated: false,
-          });
-        }
-      },
-
-      getUser: async () => {
-        try {
-          set({ isLoading: true });
-
-          const user = await apiClient.get<User>('/api/auth/me');
-
-          set({
-            user,
-            isAuthenticated: true,
-            isLoading: false,
-          });
-          return true;
-        } catch (_) {
-          set({
-            user: null,
-            isAuthenticated: false,
-            isLoading: false,
-          });
-          return false;
-        }
-      },
-    }),
-    {
-      name: 'auth-storage',
-      partialize: state => ({
-        user: state.user,
-        isAuthenticated: state.isAuthenticated,
-      }),
+      set({
+        user,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+    } catch (err) {
+      const error = err as Error & ApiError;
+      set({
+        error: error.data?.error || 'Login failed',
+        isLoading: false,
+      });
+      throw err;
     }
-  )
-);
+  },
+
+  register: async (username, email, password, confirmPassword) => {
+    try {
+      set({ isLoading: true, error: null });
+
+      const user = await apiClient.post<User>('/api/auth/register', {
+        username,
+        email,
+        password,
+        confirmPassword,
+      });
+
+      set({
+        user,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+    } catch (err) {
+      const error = err as Error & ApiError;
+      set({
+        error: error.data?.error || 'Registration failed',
+        isLoading: false,
+      });
+      throw err;
+    }
+  },
+
+  logout: async () => {
+    try {
+      set({ isLoading: true });
+
+      await apiClient.delete('/api/auth/logout');
+
+      set({
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+      });
+    } catch (err) {
+      const error = err as Error & ApiError;
+      set({
+        error: error.data?.error || 'Logout failed',
+        isLoading: false,
+        user: null,
+        isAuthenticated: false,
+      });
+    }
+  },
+
+  getUser: async () => {
+    try {
+      set({ isLoading: true });
+
+      const user = await apiClient.get<User>('/api/auth/me');
+
+      set({
+        user,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+      return true;
+    } catch (_) {
+      set({
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+      });
+      return false;
+    }
+  },
+}));
 
 export default useAuthStore;
