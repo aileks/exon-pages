@@ -40,6 +40,17 @@ export default function LoginForm() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    try {
+      setFormError(null);
+      await login('demo@exon.pages', 'password');
+      navigate('/');
+    } catch (err: any) {
+      console.error(err);
+      setFormError(err?.data?.error || 'Login failed. Please try again.');
+    }
+  };
+
   return (
     <Form {...form}>
       <form
@@ -95,6 +106,14 @@ export default function LoginForm() {
           : 'Log In'}
         </Button>
       </form>
+
+      <Button
+        variant='secondary'
+        className='mt-4 w-full'
+        onClick={handleDemoLogin}
+      >
+        Demo Login
+      </Button>
     </Form>
   );
 }
