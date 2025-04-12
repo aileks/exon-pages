@@ -3,10 +3,11 @@ from flask import Flask, Response, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from flask_login import LoginManager, login_manager
+from flask_login import LoginManager
 
 from .models import db, User
 from .config import Config
+from .api.auth import auth
 
 app: Flask = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
 app.config.from_object(Config)
@@ -17,6 +18,9 @@ CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+app.register_blueprint(auth, url_prefix="/api/auth")
 
 
 @login_manager.user_loader
