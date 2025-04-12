@@ -8,7 +8,7 @@ from app.models.db import db
 auth = Blueprint("auth", __name__)
 
 
-@auth.route("/users/new", methods=["POST"])
+@auth.route("/register", methods=["POST"])
 def signup():
     data = request.json
 
