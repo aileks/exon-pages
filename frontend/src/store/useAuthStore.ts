@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import apiClient from '@/lib/apiClient';
 
 interface User {
-  id: number;
+  id: string;
   username: string;
   email: string;
 }

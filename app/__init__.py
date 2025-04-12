@@ -30,8 +30,8 @@ def load_user(user_id: str) -> User | None:
 
 
 @login_manager.unauthorized_handler
-def unauthorized() -> Response:
-    return jsonify({"message": "Unauthorized"}, 401)
+def unauthorized() -> tuple[Response, int]:
+    return jsonify({"message": "Unauthorized", "status_code": 401}), 401
 
 
 @app.errorhandler(404)
@@ -41,10 +41,7 @@ def not_found(_) -> Response:
 
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e) -> tuple[Response, int]:
-    return (
-        jsonify({"message": e.description, "status_code": 400}),
-        400,
-    )
+    return jsonify({"message": e.description, "status_code": 400}), 400
 
 
 @app.route("/", defaults={"path": ""})

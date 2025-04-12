@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import useAuthStore from '@/store/useAuthStore';
 import { Link } from 'react-router';
 import Loading from '@/components/Loading';
+import { Button } from '@/components/ui/button.tsx';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,7 +10,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { user, logout, isLoading } = useAuthStore();
-
+  console.log('User response:', user);
   return (
     <div className='bg-background flex min-h-screen flex-col'>
       <header className='border-border border-b'>
@@ -18,7 +19,7 @@ export default function Layout({ children }: LayoutProps) {
             to='/'
             className='text-primary text-xl font-bold'
           >
-            AppName
+            Exon Pages
           </Link>
 
           <div>
@@ -27,12 +28,14 @@ export default function Layout({ children }: LayoutProps) {
             : user ?
               <div className='flex items-center gap-4'>
                 <span className='text-foreground'>Welcome, {user?.username}</span>
-                <button
+
+                <Button
                   onClick={() => logout()}
-                  className='bg-secondary text-secondary-foreground rounded px-4 py-2 transition-opacity hover:opacity-90'
+                  className=''
+                  variant='destructive'
                 >
                   Log Out
-                </button>
+                </Button>
               </div>
             : <div className='space-x-4'>
                 <Link
