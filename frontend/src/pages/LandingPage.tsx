@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router';
-import useAuthStore from '@/store/useAuthStore';
 import PageContainer from '@/components/PageContainer';
 import Loading from '@/components/Loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { useAuthStore } from '@/store';
 
 export default function LandingPage() {
   const { isAuthenticated, getUser, isLoading } = useAuthStore();

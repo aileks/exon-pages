@@ -12,6 +12,7 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import ThemeToggle from '@/components/ThemeToggle';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -109,6 +110,7 @@ export default function Layout({ children }: LayoutProps) {
               <Loading size='sm' />
             : user ?
               <div className='flex items-center gap-4'>
+                <ThemeToggle />
                 <span className='text-foreground'>Welcome, {user?.username}</span>
 
                 <Button
@@ -119,6 +121,7 @@ export default function Layout({ children }: LayoutProps) {
                 </Button>
               </div>
             : <div className='space-x-4'>
+                <ThemeToggle />
                 <Button asChild>
                   <Link to='/login'>Login</Link>
                 </Button>

@@ -6,8 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router';
-import useAuthStore from '@/store/useAuthStore';
 import Loading from '@/components/Loading';
+import { useAuthStore } from '@/store';
 
 const registerSchema = z
   .object({

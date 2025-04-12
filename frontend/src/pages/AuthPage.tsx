@@ -11,7 +11,7 @@ export default function AuthPage() {
 
   return (
     <PageContainer variant='centered'>
-      <Card className='w-full max-w-md border-2 shadow-lg'>
+      <Card className='w-full max-w-lg border-2 shadow-lg'>
         <CardHeader className='text-center'>
           <CardTitle className='text-2xl font-bold'>
             {activeTab === 'login' ? 'Welcome Back' : 'Create Account'}
@@ -24,7 +24,7 @@ export default function AuthPage() {
           </CardDescription>
         </CardHeader>
 
-        <Separator className='mx-6' />
+        <Separator className='max-w-md self-center' />
 
         <CardContent className='pt-6'>
           <Tabs
