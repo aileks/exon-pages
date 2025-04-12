@@ -8,7 +8,7 @@ export default function AuthPage() {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-50'>
+    <div className='mt-64 flex items-center justify-center bg-gray-50'>
       <Card className='w-full max-w-md shadow-lg'>
         <CardHeader className='text-center'>
           <CardTitle className='text-2xl font-bold'>

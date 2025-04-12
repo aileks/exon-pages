@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode, useState } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle } from 'lucide-react';
 
@@ -58,37 +58,4 @@ export class ErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
   }
-}
-
-export function withErrorBoundary<P extends object>(
-  Component: React.ComponentType<P>,
-  fallback?: ReactNode
-): React.FC<P> {
-  return (props: P) => (
-    <ErrorBoundary fallback={fallback}>
-      <Component {...props} />
-    </ErrorBoundary>
-  );
-}
-
-export function useErrorBoundary() {
-  const [hasError, setHasError] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-
-  const showBoundary = (err: Error) => {
-    setError(err);
-    setHasError(true);
-  };
-
-  const resetBoundary = () => {
-    setError(null);
-    setHasError(false);
-  };
-
-  return {
-    hasError,
-    error,
-    showBoundary,
-    resetBoundary,
-  };
 }

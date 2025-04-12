@@ -1,4 +1,5 @@
 from typing import cast
+import uuid
 from flask import Flask, Response, jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -24,12 +25,12 @@ app.register_blueprint(auth, url_prefix="/api/auth")
 
 
 @login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(user_id: str) -> User | None:
+    return User.query.get(uuid.UUID(user_id))
 
 
 @login_manager.unauthorized_handler
-def unauthorized():
+def unauthorized() -> Response:
     return jsonify({"message": "Unauthorized"}, 401)
 
 

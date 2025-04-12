@@ -17,27 +17,35 @@ interface ApiError {
 }
 
 interface AuthState {
-  // State
   user: User | null;
   isLoading: boolean;
   error: string | null;
   isAuthenticated: boolean;
+}
 
-  // Actions
+interface AuthActions {
   login: (email: string, password: string) => Promise<void>;
   register: (username: string, email: string, password: string, confirmPassword: string) => Promise<void>;
   logout: () => Promise<void>;
-  getUser: () => Promise<void>;
+  getUser: () => Promise<boolean>;
   clearError: () => void;
+  setError: (error: string | null) => void;
+  setLoading: (isLoading: boolean) => void;
 }
 
-const useAuthStore = create<AuthState>()(
+type AuthStore = AuthState & AuthActions;
+
+const useAuthStore = create<AuthStore>()(
   persist(
     set => ({
       user: null,
       isLoading: false,
       error: null,
       isAuthenticated: false,
+
+      setLoading: isLoading => set({ isLoading }),
+      setError: error => set({ error }),
+      clearError: () => set({ error: null }),
 
       login: async (email, password) => {
         try {
@@ -102,6 +110,8 @@ const useAuthStore = create<AuthState>()(
           set({
             error: error.data?.error || 'Logout failed',
             isLoading: false,
+            user: null,
+            isAuthenticated: false,
           });
         }
       },
@@ -117,21 +127,23 @@ const useAuthStore = create<AuthState>()(
             isAuthenticated: true,
             isLoading: false,
           });
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          return true;
         } catch (_) {
           set({
             user: null,
             isAuthenticated: false,
             isLoading: false,
           });
+          return false;
         }
       },
-
-      clearError: () => set({ error: null }),
     }),
     {
       name: 'auth-storage',
-      partialize: state => ({ user: state.user, isAuthenticated: state.isAuthenticated }),
+      partialize: state => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );
