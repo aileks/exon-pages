@@ -8,7 +8,7 @@ from flask_wtf.csrf import CSRFProtect, CSRFError
 from .models import db
 from .config import Config
 
-app: Flask = Flask(__name__, static_folder='frontend/dist', static_url_path='/')
+app: Flask = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 app.config.from_object(Config)
 csrf = CSRFProtect(app)
 db.init_app(app)
@@ -27,7 +27,7 @@ CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
 #     return jsonify({"message": 'Unauthorized'}, 401)
 
 @app.errorhandler(404)
-def not_found(e: Exception) -> Response:
+def not_found(_) -> Response:
     return cast(Response, app.send_static_file("index.html"))
 
 @app.errorhandler(CSRFError)
