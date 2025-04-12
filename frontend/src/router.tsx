@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import App from './App';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 
-const LandingPage = lazy(() => import('./pages/LandingPage'));
+const HomeContainer = lazy(() => import('./pages/HomeContainer'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
 
 const router = createBrowserRouter([
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LandingPage />,
+        element: <HomeContainer />,
       },
       {
         path: '/login',

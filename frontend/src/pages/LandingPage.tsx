@@ -1,28 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router';
 import PageContainer from '@/components/PageContainer';
-import Loading from '@/components/Loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { useAuthStore } from '@/store';
 import { BarChart3, Calendar, Database, FileText, FlaskConical, TestTubes } from 'lucide-react';
 
 export default function LandingPage() {
-  const { isAuthenticated, getUser, isLoading } = useAuthStore();
-
-  useEffect(() => {
-    getUser();
-  }, [getUser]);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return isAuthenticated ? <AuthenticatedView /> : <UnauthenticatedView />;
-}
-
-const UnauthenticatedView = () => {
   return (
     <PageContainer>
       <div className='mx-auto mb-16 max-w-3xl text-center'>
@@ -107,105 +91,7 @@ const UnauthenticatedView = () => {
       </div>
     </PageContainer>
   );
-};
-
-const AuthenticatedView = () => {
-  const { user } = useAuthStore();
-
-  return (
-    <PageContainer>
-      <div className='mx-auto max-w-4xl'>
-        <h1 className='mb-6 text-4xl font-bold'>Welcome back, {user?.username}!</h1>
-
-        <Card className='mb-8'>
-          <CardHeader>
-            <CardTitle className='text-2xl'>Your Laboratory Dashboard</CardTitle>
-          </CardHeader>
-
-          <CardContent>
-            <p className='text-muted-foreground mb-6'>Here's an overview of your recent research activity:</p>
-
-            <div className='grid gap-6 md:grid-cols-2'>
-              <Card className='experiment-card'>
-                <CardHeader className='p-0 pb-2'>
-                  <div className='flex items-center justify-between'>
-                    <CardTitle className='text-base font-medium'>Recent Experiments</CardTitle>
-
-                    <div className='flex items-center'>
-                      <div className='status-active mr-2'></div>
-
-                      <span className='text-xs'>2 Active</span>
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardContent className='p-0'>
-                  <div className='bg-muted/50 rounded p-4 text-sm'>
-                    <p>
-                      PCR Amplification - <span className='text-primary'>In Progress</span>
-                    </p>
-
-                    <p className='text-muted-foreground mt-1 text-xs'>Last updated: 2 hours ago</p>
-                  </div>
-
-                  <div className='rounded p-4 text-sm'>
-                    <p>
-                      Gel Electrophoresis - <span className='text-accent'>Planned</span>
-                    </p>
-
-                    <p className='text-muted-foreground mt-1 text-xs'>Scheduled: Tomorrow</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className='experiment-card border-l-secondary'>
-                <CardHeader className='p-0 pb-2'>
-                  <CardTitle className='text-base font-medium'>Pending Tasks</CardTitle>
-                </CardHeader>
-
-                <CardContent className='p-0'>
-                  <div className='flex items-center p-3'>
-                    <input
-                      type='checkbox'
-                      className='mr-3'
-                    />
-                    <span className='text-sm'>Prepare PCR primers</span>
-                  </div>
-
-                  <div className='flex items-center border-t p-3'>
-                    <input
-                      type='checkbox'
-                      className='mr-3'
-                    />
-                    <span className='text-sm'>Order new restriction enzymes</span>
-                  </div>
-
-                  <div className='flex items-center border-t p-3'>
-                    <input
-                      type='checkbox'
-                      className='mr-3'
-                    />
-                    <span className='text-sm'>Update sample database</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Button size='sm'>View All Experiments</Button>
-
-        <Button
-          variant='outline'
-          className='ml-4'
-          size='sm'
-        >
-          Create New Experiment
-        </Button>
-      </div>
-    </PageContainer>
-  );
-};
+}
 
 interface FeatureCardProps {
   icon: React.ReactNode;
