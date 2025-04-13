@@ -6,6 +6,10 @@ import Loading from '@/components/Loading';
 import { Note } from '@/lib/notebookApi';
 import { useNotebookStore } from '@/store';
 import { Button } from '@/components/ui/button.tsx';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
+import { htmlToMarkdown } from '@/lib/utils.ts';
 
 interface NotesPageProps {
   sidebarMode?: boolean;
@@ -116,29 +120,31 @@ export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
                 </Button>
               </div>
 
-              <div className='flex-grow space-y-4 overflow-auto pb-4'>
-                <div
-                  className='border-border rounded-md border p-4'
-                  dangerouslySetInnerHTML={{ __html: currentNote.content }}
-                />
-
-                {currentNote.tags && currentNote.tags.length > 0 && (
-                  <div className='mt-4'>
-                    <h3 className='mb-2 text-sm font-medium'>Tags</h3>
-
-                    <div className='flex flex-wrap gap-2'>
-                      {currentNote.tags.map(tag => (
-                        <span
-                          key={tag}
-                          className='bg-primary/10 text-primary rounded-full px-2 py-1 text-xs'
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+              <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-4'>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight]}
+                >
+                  {htmlToMarkdown(currentNote.content)}
+                </ReactMarkdown>
               </div>
+
+              {currentNote.tags && currentNote.tags.length > 0 && (
+                <div className='mt-4'>
+                  <h3 className='mb-2 text-sm font-medium'>Tags</h3>
+
+                  <div className='flex flex-wrap gap-2'>
+                    {currentNote.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className='bg-primary/10 text-primary rounded-full px-2 py-1 text-xs'
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           : <div className='text-muted-foreground flex h-full items-center justify-center'>
               <p>Select a note or create a new one to get started</p>

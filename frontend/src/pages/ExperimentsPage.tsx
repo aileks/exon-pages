@@ -8,6 +8,10 @@ import { useNotebookStore } from '@/store';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Beaker, FileText, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
+import { htmlToMarkdown } from '@/lib/utils.ts';
 
 interface ExperimentsPageProps {
   sidebarMode?: boolean;
@@ -156,8 +160,9 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
                   </div>
 
                   <Button
+                    variant='link'
+                    className='text-primary hover:text-primary/80 h-auto p-0'
                     onClick={handleEditExperiment}
-                    className='text-primary hover:text-primary/80 text-sm font-medium'
                   >
                     Edit
                   </Button>
@@ -173,10 +178,12 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
                     <Beaker className='mr-1 h-4 w-4' />
                     Overview
                   </TabsTrigger>
+
                   <TabsTrigger value='procedure'>
                     <FlaskConical className='mr-1 h-4 w-4' />
                     Procedure
                   </TabsTrigger>
+
                   <TabsTrigger value='results'>
                     <FileText className='mr-1 h-4 w-4' />
                     Results
@@ -197,6 +204,7 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
                         <div>
                           <span className='font-medium'>Last Updated:</span> {formatDate(currentExperiment.updated_at)}
                         </div>
+
                         {currentExperiment.started_at && (
                           <div>
                             <span className='font-medium'>Started:</span> {formatDate(currentExperiment.started_at)}
@@ -212,37 +220,53 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
 
                       <div>
                         <h3 className='mb-2 text-lg font-medium'>Hypothesis</h3>
-                        <div
-                          className='border-border rounded-md border p-4'
-                          dangerouslySetInnerHTML={{ __html: currentExperiment.hypothesis }}
-                        />
+                        <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-4'>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                          >
+                            {htmlToMarkdown(currentExperiment.hypothesis)}
+                          </ReactMarkdown>
+                        </div>
                       </div>
 
                       <div>
                         <h3 className='mb-2 text-lg font-medium'>Materials</h3>
-                        <div
-                          className='border-border rounded-md border p-4'
-                          dangerouslySetInnerHTML={{
-                            __html: currentExperiment.materials || 'No materials specified',
-                          }}
-                        />
+                        <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-4'>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                          >
+                            {currentExperiment.materials ?
+                              htmlToMarkdown(currentExperiment.materials)
+                            : 'No materials recorded yet'}
+                          </ReactMarkdown>
+                        </div>
                       </div>
 
                       <div>
                         <h3 className='mb-2 text-lg font-medium'>Methods</h3>
-                        <div
-                          className='border-border rounded-md border p-4'
-                          dangerouslySetInnerHTML={{ __html: currentExperiment.methods }}
-                        />
+                        <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-4'>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                          >
+                            {htmlToMarkdown(currentExperiment.methods)}
+                          </ReactMarkdown>
+                        </div>
                       </div>
 
                       {currentExperiment.references && (
                         <div>
                           <h3 className='mb-2 text-lg font-medium'>References</h3>
-                          <div
-                            className='border-border rounded-md border p-4'
-                            dangerouslySetInnerHTML={{ __html: currentExperiment.references }}
-                          />
+                          <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-4'>
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              rehypePlugins={[rehypeHighlight]}
+                            >
+                              {htmlToMarkdown(currentExperiment.references)}
+                            </ReactMarkdown>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -279,19 +303,27 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
 
                               <div className='mb-3'>
                                 <h5 className='mb-1 text-sm font-medium'>Description</h5>
-                                <div
-                                  className='border-border rounded-md border p-3'
-                                  dangerouslySetInnerHTML={{ __html: step.description }}
-                                />
+                                <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-3'>
+                                  <ReactMarkdown
+                                    remarkPlugins={[remarkGfm]}
+                                    rehypePlugins={[rehypeHighlight]}
+                                  >
+                                    {htmlToMarkdown(step.description)}
+                                  </ReactMarkdown>
+                                </div>
                               </div>
 
                               {step.observation && (
                                 <div>
                                   <h5 className='mb-1 text-sm font-medium'>Observations</h5>
-                                  <div
-                                    className='border-border rounded-md border p-3'
-                                    dangerouslySetInnerHTML={{ __html: step.observation }}
-                                  />
+                                  <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-3'>
+                                    <ReactMarkdown
+                                      remarkPlugins={[remarkGfm]}
+                                      rehypePlugins={[rehypeHighlight]}
+                                    >
+                                      {htmlToMarkdown(step.observation)}
+                                    </ReactMarkdown>
+                                  </div>
                                 </div>
                               )}
                             </div>
@@ -308,22 +340,30 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
                     <div className='space-y-4'>
                       <div>
                         <h3 className='mb-2 text-lg font-medium'>Results</h3>
-                        <div
-                          className='border-border rounded-md border p-4'
-                          dangerouslySetInnerHTML={{
-                            __html: currentExperiment.results || 'No results recorded yet',
-                          }}
-                        />
+                        <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-4'>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                          >
+                            {currentExperiment.results ?
+                              htmlToMarkdown(currentExperiment.results)
+                            : 'No results recorded yet'}
+                          </ReactMarkdown>
+                        </div>
                       </div>
 
                       <div>
                         <h3 className='mb-2 text-lg font-medium'>Conclusion</h3>
-                        <div
-                          className='border-border rounded-md border p-4'
-                          dangerouslySetInnerHTML={{
-                            __html: currentExperiment.conclusion || 'No conclusion recorded yet',
-                          }}
-                        />
+                        <div className='border-border prose prose-stone dark:prose-invert max-w-none rounded-md border p-4'>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
+                          >
+                            {currentExperiment.conclusion ?
+                              htmlToMarkdown(currentExperiment.conclusion)
+                            : 'No conclusion recorded yet'}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                     </div>
                   </TabsContent>

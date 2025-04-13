@@ -64,8 +64,8 @@ export default function NotesList({ notes, selectedNoteId, onSelect, onCreateNew
                 <Button
                   variant='ghost'
                   className={cn(
-                    'border-border hover:bg-accent h-auto w-full justify-start rounded-md border p-3 text-left transition-colors',
-                    selectedNoteId === note.id && 'bg-accent'
+                    'border-border hover:bg-accent h-auto w-full justify-start rounded-md border p-3 text-left transition-colors hover:text-white',
+                    selectedNoteId === note.id && 'bg-muted'
                   )}
                   onClick={() => onSelect(note)}
                 >

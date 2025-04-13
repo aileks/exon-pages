@@ -3,7 +3,7 @@ import { Note } from '@/lib/notebookApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import TextEditor from './TextEditor';
+import MarkdownEditor from './MarkdownEditor';
 import { Save, Trash2, X } from 'lucide-react';
 
 interface NoteEditorProps {
@@ -118,9 +118,9 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
         </div>
 
         <div>
-          <Label className='mb-1 block text-sm font-medium'>Content</Label>
+          <Label className='mb-1 block text-sm font-medium'>Content (Supports Markdown)</Label>
 
-          <TextEditor
+          <MarkdownEditor
             value={content}
             onChange={setContent}
             className='min-h-[300px]'

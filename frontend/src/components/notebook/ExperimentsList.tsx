@@ -94,8 +94,8 @@ export default function ExperimentsList({
                 <Button
                   variant='ghost'
                   className={cn(
-                    'border-border hover:bg-accent h-auto w-full justify-start rounded-md border p-3 text-left transition-colors',
-                    selectedExperimentId === experiment.id && 'bg-accent'
+                    'border-border hover:bg-accent h-auto w-full justify-start rounded-md border p-3 text-left transition-colors hover:text-white',
+                    selectedExperimentId === experiment.id && 'bg-muted'
                   )}
                   onClick={() => onSelect(experiment)}
                 >

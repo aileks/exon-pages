@@ -3,7 +3,7 @@ import { Experiment } from '@/lib/notebookApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import TextEditor from './TextEditor';
+import MarkdownEditor from './MarkdownEditor';
 import {
   AlertCircle,
   Beaker,
@@ -297,8 +297,8 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <Label className='mb-1 block text-sm font-medium'>Hypothesis*</Label>
-                <TextEditor
+                <Label className='mb-1 block text-sm font-medium'>Hypothesis* (Supports Markdown)</Label>
+                <MarkdownEditor
                   value={hypothesis}
                   onChange={setHypothesis}
                   className='min-h-[100px]'
@@ -307,8 +307,8 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <Label className='mb-1 block text-sm font-medium'>Materials</Label>
-                <TextEditor
+                <Label className='mb-1 block text-sm font-medium'>Materials (Supports Markdown)</Label>
+                <MarkdownEditor
                   value={materials}
                   onChange={setMaterials}
                   className='min-h-[150px]'
@@ -317,8 +317,8 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <Label className='mb-1 block text-sm font-medium'>Methods*</Label>
-                <TextEditor
+                <Label className='mb-1 block text-sm font-medium'>Methods* (Supports Markdown)</Label>
+                <MarkdownEditor
                   value={methods}
                   onChange={setMethods}
                   className='min-h-[200px]'
@@ -410,8 +410,8 @@ export default function ExperimentEditor({
                       )}
 
                       <div className='mb-3'>
-                        <Label className='mb-1 block text-sm font-medium'>Description*</Label>
-                        <TextEditor
+                        <Label className='mb-1 block text-sm font-medium'>Description* (Supports Markdown)</Label>
+                        <MarkdownEditor
                           value={step.description}
                           onChange={value => handleUpdateStep(index, 'description', value)}
                           className='min-h-[100px]'
@@ -420,8 +420,8 @@ export default function ExperimentEditor({
                       </div>
 
                       <div>
-                        <Label className='mb-1 block text-sm font-medium'>Observations</Label>
-                        <TextEditor
+                        <Label className='mb-1 block text-sm font-medium'>Observations (Supports Markdown)</Label>
+                        <MarkdownEditor
                           value={step.observation}
                           onChange={value => handleUpdateStep(index, 'observation', value)}
                           className='min-h-[100px]'
@@ -441,8 +441,8 @@ export default function ExperimentEditor({
           >
             <div className='space-y-4'>
               <div>
-                <Label className='mb-1 block text-sm font-medium'>Results</Label>
-                <TextEditor
+                <Label className='mb-1 block text-sm font-medium'>Results (Supports Markdown)</Label>
+                <MarkdownEditor
                   value={results}
                   onChange={setResults}
                   className='min-h-[200px]'
@@ -451,8 +451,8 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <Label className='mb-1 block text-sm font-medium'>Conclusion</Label>
-                <TextEditor
+                <Label className='mb-1 block text-sm font-medium'>Conclusion (Supports Markdown)</Label>
+                <MarkdownEditor
                   value={conclusion}
                   onChange={setConclusion}
                   className='min-h-[200px]'
@@ -467,8 +467,8 @@ export default function ExperimentEditor({
             className='mt-0 h-full'
           >
             <div>
-              <Label className='mb-1 block text-sm font-medium'>References & Citations</Label>
-              <TextEditor
+              <Label className='mb-1 block text-sm font-medium'>References & Citations (Supports Markdown)</Label>
+              <MarkdownEditor
                 value={references}
                 onChange={setReferences}
                 className='min-h-[300px]'
