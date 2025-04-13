@@ -172,6 +172,7 @@ export default function ExperimentEditor({
     <div className='flex h-full flex-col'>
       <div className='mb-4 flex items-center justify-between'>
         <h2 className='text-xl font-bold'>{isNew ? 'New Experiment' : 'Edit Experiment'}</h2>
+
         <div className='flex gap-2'>
           {!isNew && onDelete && (
             <Button
@@ -183,6 +184,7 @@ export default function ExperimentEditor({
               Delete
             </Button>
           )}
+
           <Button
             variant='ghost'
             size='sm'
@@ -191,6 +193,7 @@ export default function ExperimentEditor({
             <X className='mr-1 h-4 w-4' />
             Cancel
           </Button>
+
           <Button
             size='sm'
             onClick={handleSave}
@@ -211,14 +214,17 @@ export default function ExperimentEditor({
             <Beaker className='mr-1 h-4 w-4' />
             Overview
           </TabsTrigger>
+
           <TabsTrigger value='procedure'>
             <ListOrdered className='mr-1 h-4 w-4' />
             Procedure
           </TabsTrigger>
+
           <TabsTrigger value='results'>
             <Microscope className='mr-1 h-4 w-4' />
             Results
           </TabsTrigger>
+
           <TabsTrigger value='references'>
             <BookOpen className='mr-1 h-4 w-4' />
             References
@@ -238,6 +244,7 @@ export default function ExperimentEditor({
                 >
                   Title*
                 </Label>
+
                 <Input
                   id='title'
                   value={title}
@@ -249,6 +256,7 @@ export default function ExperimentEditor({
 
               <div>
                 <Label className='mb-1 block text-sm font-medium'>Status</Label>
+
                 <div className='flex flex-wrap gap-2'>
                   <Button
                     variant={status === 'planned' ? 'default' : 'outline'}
@@ -258,6 +266,7 @@ export default function ExperimentEditor({
                     <Clock className='mr-1 h-4 w-4' />
                     Planned
                   </Button>
+
                   <Button
                     variant={status === 'in_progress' ? 'default' : 'outline'}
                     size='sm'
@@ -266,6 +275,7 @@ export default function ExperimentEditor({
                     <PlayCircle className='mr-1 h-4 w-4' />
                     In Progress
                   </Button>
+
                   <Button
                     variant={status === 'completed' ? 'default' : 'outline'}
                     size='sm'
@@ -274,6 +284,7 @@ export default function ExperimentEditor({
                     <CheckCircle className='mr-1 h-4 w-4' />
                     Completed
                   </Button>
+
                   <Button
                     variant={status === 'failed' ? 'default' : 'outline'}
                     size='sm'
@@ -324,6 +335,7 @@ export default function ExperimentEditor({
             <div className='space-y-4'>
               <div className='flex items-center justify-between'>
                 <h3 className='text-lg font-medium'>Experiment Steps</h3>
+
                 <Button
                   size='sm'
                   onClick={handleAddStep}
@@ -345,6 +357,7 @@ export default function ExperimentEditor({
                     >
                       <div className='mb-2 flex items-center justify-between'>
                         <h4 className='font-medium'>Step {index + 1}</h4>
+
                         <div className='flex items-center gap-2'>
                           {!step.started_at && (
                             <Button
@@ -356,6 +369,7 @@ export default function ExperimentEditor({
                               Start
                             </Button>
                           )}
+
                           {step.started_at && !step.completed_at && (
                             <Button
                               size='sm'
@@ -366,9 +380,11 @@ export default function ExperimentEditor({
                               Complete
                             </Button>
                           )}
+
                           <Button
-                            size='sm'
                             variant='ghost'
+                            size='icon'
+                            className='h-8 w-8'
                             onClick={() => handleRemoveStep(index)}
                           >
                             <Trash2 className='h-4 w-4' />

@@ -5,6 +5,7 @@ import NoteEditor from '@/components/notebook/NoteEditor';
 import Loading from '@/components/Loading';
 import { Note } from '@/lib/notebookApi';
 import { useNotebookStore } from '@/store';
+import { Button } from '@/components/ui/button.tsx';
 
 interface NotesPageProps {
   sidebarMode?: boolean;
@@ -105,12 +106,14 @@ export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
             <div className='flex h-full flex-col'>
               <div className='mb-4 flex items-center justify-between'>
                 <h2 className='text-2xl font-bold'>{currentNote.title}</h2>
-                <button
+
+                <Button
+                  variant='link'
+                  className='text-primary hover:text-primary/80 h-auto p-0'
                   onClick={handleEditNote}
-                  className='text-primary hover:text-primary/80 text-sm font-medium'
                 >
                   Edit
-                </button>
+                </Button>
               </div>
 
               <div className='flex-grow space-y-4 overflow-auto pb-4'>
@@ -122,6 +125,7 @@ export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
                 {currentNote.tags && currentNote.tags.length > 0 && (
                   <div className='mt-4'>
                     <h3 className='mb-2 text-sm font-medium'>Tags</h3>
+
                     <div className='flex flex-wrap gap-2'>
                       {currentNote.tags.map(tag => (
                         <span

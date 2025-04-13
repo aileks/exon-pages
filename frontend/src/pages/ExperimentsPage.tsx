@@ -7,6 +7,7 @@ import { Experiment } from '@/lib/notebookApi';
 import { useNotebookStore } from '@/store';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Beaker, FileText, FlaskConical } from 'lucide-react';
+import { Button } from '@/components/ui/button.tsx';
 
 interface ExperimentsPageProps {
   sidebarMode?: boolean;
@@ -111,7 +112,6 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
     return <Loading />;
   }
 
-  // Main content of the page
   const content = (
     <>
       <h1 className='mb-6 text-3xl font-bold'>Experiment Notebook</h1>
@@ -145,19 +145,22 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
             <div className='flex h-full flex-col'>
               <div className='mb-4 flex items-center justify-between'>
                 <h2 className='text-2xl font-bold'>{currentExperiment.title}</h2>
+
                 <div className='flex items-center gap-4'>
                   <div className='flex items-center gap-1'>
                     <span
                       className={`inline-block h-3 w-3 rounded-full ${getStatusColor(currentExperiment.status)}`}
                     ></span>
+
                     <span className='text-sm'>{formatStatus(currentExperiment.status)}</span>
                   </div>
-                  <button
+
+                  <Button
                     onClick={handleEditExperiment}
                     className='text-primary hover:text-primary/80 text-sm font-medium'
                   >
                     Edit
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -190,6 +193,7 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
                         <div>
                           <span className='font-medium'>Created:</span> {formatDate(currentExperiment.created_at)}
                         </div>
+
                         <div>
                           <span className='font-medium'>Last Updated:</span> {formatDate(currentExperiment.updated_at)}
                         </div>
@@ -198,6 +202,7 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
                             <span className='font-medium'>Started:</span> {formatDate(currentExperiment.started_at)}
                           </div>
                         )}
+
                         {currentExperiment.completed_at && (
                           <div>
                             <span className='font-medium'>Completed:</span> {formatDate(currentExperiment.completed_at)}
@@ -262,10 +267,12 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
                             >
                               <div className='mb-2 flex items-center justify-between'>
                                 <h4 className='font-medium'>Step {index + 1}</h4>
+
                                 <div className='text-muted-foreground text-sm'>
                                   {step.started_at && (
                                     <span className='mr-3'>Started: {formatDate(step.started_at)}</span>
                                   )}
+
                                   {step.completed_at && <span>Completed: {formatDate(step.completed_at)}</span>}
                                 </div>
                               </div>
@@ -332,7 +339,6 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
     </>
   );
 
-  // Return either just the content (for sidebar mode) or wrapped in a PageContainer
   return sidebarMode ?
       <div className='mx-auto max-w-6xl'>{content}</div>
     : <PageContainer>

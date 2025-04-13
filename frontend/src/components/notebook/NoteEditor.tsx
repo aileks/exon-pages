@@ -69,6 +69,7 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
     <div className='flex h-full flex-col'>
       <div className='mb-4 flex items-center justify-between'>
         <h2 className='text-xl font-bold'>{isNew ? 'New Note' : 'Edit Note'}</h2>
+
         <div className='flex gap-2'>
           {!isNew && onDelete && (
             <Button
@@ -106,6 +107,7 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
           >
             Title
           </Label>
+
           <Input
             id='title'
             value={title}
@@ -117,6 +119,7 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
 
         <div>
           <Label className='mb-1 block text-sm font-medium'>Content</Label>
+
           <TextEditor
             value={content}
             onChange={setContent}
@@ -126,6 +129,7 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
 
         <div>
           <Label className='mb-1 block text-sm font-medium'>Tags</Label>
+
           <div className='mb-2 flex flex-wrap gap-2'>
             {tags.map(tag => (
               <div
@@ -133,15 +137,18 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
                 className='bg-secondary/20 text-secondary flex items-center rounded-full px-3 py-1 text-sm'
               >
                 {tag}
-                <button
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  className='ml-2 h-5 w-5 rounded-full p-0'
                   onClick={() => handleRemoveTag(tag)}
-                  className='hover:bg-secondary/20 ml-2 rounded-full p-1'
                 >
                   <X className='h-3 w-3' />
-                </button>
+                </Button>
               </div>
             ))}
           </div>
+
           <div className='flex'>
             <Input
               value={tagInput}
@@ -150,8 +157,8 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
               placeholder='Add a tag'
               className='flex-grow'
             />
+
             <Button
-              type='button'
               variant='secondary'
               className='ml-2'
               onClick={handleAddTag}

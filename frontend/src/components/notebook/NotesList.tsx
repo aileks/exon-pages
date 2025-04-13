@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Plus, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { formatDistanceToNow } from 'date-fns';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils.ts';
 
 interface NotesListProps {
   notes: Note[];
@@ -61,30 +61,33 @@ export default function NotesList({ notes, selectedNoteId, onSelect, onCreateNew
         : <ul className='space-y-2'>
             {filteredNotes.map(note => (
               <li key={note.id}>
-                <button
-                  onClick={() => onSelect(note)}
+                <Button
+                  variant='ghost'
                   className={cn(
-                    'border-border hover:bg-accent w-full rounded-md border p-3 text-left transition-colors',
+                    'border-border hover:bg-accent h-auto w-full justify-start rounded-md border p-3 text-left transition-colors',
                     selectedNoteId === note.id && 'bg-accent'
                   )}
+                  onClick={() => onSelect(note)}
                 >
-                  <h3 className='line-clamp-1 font-medium'>{note.title}</h3>
-                  <div className='text-muted-foreground mt-1 text-xs'>
-                    <span>Updated {formatDistanceToNow(new Date(note.updated_at))} ago</span>
-                    {note.tags && note.tags.length > 0 && (
-                      <div className='mt-1 flex flex-wrap gap-1'>
-                        {note.tags.map(tag => (
-                          <span
-                            key={tag}
-                            className='bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs'
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                  <div className='w-full text-left'>
+                    <h3 className='line-clamp-1 font-medium'>{note.title}</h3>
+                    <div className='text-muted-foreground mt-1 text-xs'>
+                      <span>Updated {formatDistanceToNow(new Date(note.updated_at))} ago</span>
+                      {note.tags && note.tags.length > 0 && (
+                        <div className='mt-1 flex flex-wrap gap-1'>
+                          {note.tags.map(tag => (
+                            <span
+                              key={tag}
+                              className='bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs'
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </button>
+                </Button>
               </li>
             ))}
           </ul>
