@@ -1,6 +1,7 @@
 from typing import cast
 import uuid
-from flask import Flask, Response, jsonify
+import traceback
+from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, CSRFError
@@ -39,13 +40,42 @@ def unauthorized() -> tuple[Response, int]:
 
 
 @app.errorhandler(404)
-def not_found(_) -> Response:
+def not_found(_) -> Response | tuple[Response, int]:
+    if request.path.startswith("/api/"):
+        return jsonify({"error": "Resource not found", "status_code": 404}), 404
     return cast(Response, app.send_static_file("index.html"))
 
 
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e) -> tuple[Response, int]:
-    return jsonify({"message": e.description, "status_code": 400}), 400
+    return jsonify({"error": e.description, "status_code": 400}), 400
+
+
+@app.errorhandler(400)
+def handle_bad_request(e) -> tuple[Response, int]:
+    return jsonify({"error": str(e), "status_code": 400}), 400
+
+
+@app.errorhandler(401)
+def handle_unauthorized(e) -> tuple[Response, int]:
+    return jsonify({"error": "Unauthorized", "status_code": 401}), 401
+
+
+@app.errorhandler(403)
+def handle_forbidden(e) -> tuple[Response, int]:
+    return jsonify({"error": "Forbidden", "status_code": 403}), 403
+
+
+@app.errorhandler(405)
+def handle_method_not_allowed(e) -> tuple[Response, int]:
+    return jsonify({"error": "Method not allowed", "status_code": 405}), 405
+
+
+@app.errorhandler(500)
+def handle_server_error(e) -> tuple[Response, int]:
+    app.logger.error(f"Server error: {str(e)}")
+    app.logger.error(traceback.format_exc())
+    return jsonify({"error": "Internal server error", "status_code": 500}), 500
 
 
 @app.route("/", defaults={"path": ""})

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface TextEditorProps {
@@ -18,17 +18,37 @@ export default function TextEditor({
   minHeight = '200px',
   readOnly = false,
 }: TextEditorProps) {
-  const [localValue, setLocalValue] = useState(value);
+  const editorRef = useRef<HTMLDivElement>(null);
+  const [isComposing, setIsComposing] = useState(false);
 
   useEffect(() => {
-    setLocalValue(value);
-  }, [value]);
+    const editor = editorRef.current;
+    if (editor && editor.innerHTML !== value && !isComposing) {
+      const selection = window.getSelection();
+      const range = selection?.getRangeAt(0);
+      const startContainer = range?.startContainer;
+      const startOffset = range?.startOffset;
+      const isEditorFocused = editor.contains(selection?.focusNode || null);
 
-  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    if (readOnly) return;
+      editor.innerHTML = value || '';
 
-    const newValue = e.currentTarget.innerHTML;
-    setLocalValue(newValue);
+      if (isEditorFocused && startContainer && range && selection) {
+        try {
+          selection.removeAllRanges();
+          range.setStart(startContainer, startOffset || 0);
+          range.setEnd(startContainer, startOffset || 0);
+          selection.addRange(range);
+        } catch (e) {
+          console.warn('Could not restore cursor position:', e);
+        }
+      }
+    }
+  }, [value, isComposing]);
+
+  const handleInput = () => {
+    if (readOnly || !editorRef.current) return;
+
+    const newValue = editorRef.current.innerHTML;
     onChange(newValue);
   };
 
@@ -42,10 +62,15 @@ export default function TextEditor({
       style={{ minHeight }}
     >
       <div
+        ref={editorRef}
         contentEditable={!readOnly}
         className='h-full w-full outline-none'
-        dangerouslySetInnerHTML={{ __html: localValue || '' }}
         onInput={handleInput}
+        onCompositionStart={() => setIsComposing(true)}
+        onCompositionEnd={() => {
+          setIsComposing(false);
+          handleInput();
+        }}
         data-placeholder={placeholder}
         style={{
           minHeight: readOnly ? 'unset' : minHeight,

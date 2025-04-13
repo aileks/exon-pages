@@ -5,10 +5,8 @@ import NotFoundPage from './pages/NotFoundPage.tsx';
 
 const AuthPage = lazy(() => import('./pages/AuthPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
-const ExperimentsPage = lazy(() => import('./pages/ExperimentsPage'));
 const HomeContainer = lazy(() => import('./components/HomeContainer'));
 const NotebookPage = lazy(() => import('./pages/NotebookPage'));
-const NotesPage = lazy(() => import('./pages/NotesPage'));
 
 const router = createBrowserRouter([
   {
@@ -29,11 +27,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/notebook/notes',
-        element: <NotesPage />,
+        element: <NotebookPage />,
       },
       {
         path: '/notebook/experiments',
-        element: <ExperimentsPage />,
+        element: <NotebookPage />,
       },
       {
         path: '/about',
