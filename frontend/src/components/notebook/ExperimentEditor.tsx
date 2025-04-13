@@ -3,7 +3,7 @@ import { Experiment } from '@/lib/notebookApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import MarkdownEditor from './MarkdownEditor';
+import NotebookEditor from './NotebookEditor.tsx';
 import {
   AlertCircle,
   Beaker,
@@ -298,7 +298,7 @@ export default function ExperimentEditor({
 
               <div>
                 <Label className='mb-1 block text-sm font-medium'>Hypothesis* (Supports Markdown)</Label>
-                <MarkdownEditor
+                <NotebookEditor
                   value={hypothesis}
                   onChange={setHypothesis}
                   className='min-h-[100px]'
@@ -308,7 +308,7 @@ export default function ExperimentEditor({
 
               <div>
                 <Label className='mb-1 block text-sm font-medium'>Materials (Supports Markdown)</Label>
-                <MarkdownEditor
+                <NotebookEditor
                   value={materials}
                   onChange={setMaterials}
                   className='min-h-[150px]'
@@ -318,7 +318,7 @@ export default function ExperimentEditor({
 
               <div>
                 <Label className='mb-1 block text-sm font-medium'>Methods* (Supports Markdown)</Label>
-                <MarkdownEditor
+                <NotebookEditor
                   value={methods}
                   onChange={setMethods}
                   className='min-h-[200px]'
@@ -411,7 +411,7 @@ export default function ExperimentEditor({
 
                       <div className='mb-3'>
                         <Label className='mb-1 block text-sm font-medium'>Description* (Supports Markdown)</Label>
-                        <MarkdownEditor
+                        <NotebookEditor
                           value={step.description}
                           onChange={value => handleUpdateStep(index, 'description', value)}
                           className='min-h-[100px]'
@@ -421,7 +421,7 @@ export default function ExperimentEditor({
 
                       <div>
                         <Label className='mb-1 block text-sm font-medium'>Observations (Supports Markdown)</Label>
-                        <MarkdownEditor
+                        <NotebookEditor
                           value={step.observation}
                           onChange={value => handleUpdateStep(index, 'observation', value)}
                           className='min-h-[100px]'
@@ -442,7 +442,7 @@ export default function ExperimentEditor({
             <div className='space-y-4'>
               <div>
                 <Label className='mb-1 block text-sm font-medium'>Results (Supports Markdown)</Label>
-                <MarkdownEditor
+                <NotebookEditor
                   value={results}
                   onChange={setResults}
                   className='min-h-[200px]'
@@ -452,7 +452,7 @@ export default function ExperimentEditor({
 
               <div>
                 <Label className='mb-1 block text-sm font-medium'>Conclusion (Supports Markdown)</Label>
-                <MarkdownEditor
+                <NotebookEditor
                   value={conclusion}
                   onChange={setConclusion}
                   className='min-h-[200px]'
@@ -468,7 +468,7 @@ export default function ExperimentEditor({
           >
             <div>
               <Label className='mb-1 block text-sm font-medium'>References & Citations (Supports Markdown)</Label>
-              <MarkdownEditor
+              <NotebookEditor
                 value={references}
                 onChange={setReferences}
                 className='min-h-[300px]'

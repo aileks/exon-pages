@@ -81,7 +81,7 @@ export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
     <>
       <h1 className='mb-6 text-3xl font-bold'>Research Notes</h1>
 
-      <div className='grid h-[calc(100vh-12rem)] grid-cols-3 gap-6'>
+      <div className='grid h-[calc(100vh-12rem)] grid-cols-4 gap-6'>
         <div className='border-border rounded-lg border p-4'>
           <NotesList
             notes={notes}
@@ -91,7 +91,7 @@ export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
           />
         </div>
 
-        <div className='border-border col-span-2 rounded-lg border p-4'>
+        <div className='border-border col-span-3 rounded-lg border p-4'>
           {isCreating ?
             <NoteEditor
               note={null}
@@ -156,8 +156,8 @@ export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
   );
 
   return sidebarMode ?
-      <div className='mx-auto max-w-6xl'>{content}</div>
+      <div className='w-full'>{content}</div>
     : <PageContainer>
-        <div className='mx-auto max-w-6xl'>{content}</div>
+        <div className='w-full'>{content}</div>
       </PageContainer>;
 }

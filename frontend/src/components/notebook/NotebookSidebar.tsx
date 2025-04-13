@@ -4,6 +4,8 @@ import { Book, Clock, FileText, FlaskConical, Star, Tag, Trash2 } from 'lucide-r
 
 interface NotebookSidebarProps {
   className?: string;
+  onCreateNote?: () => void;
+  onCreateExperiment?: () => void;
 }
 
 export default function NotebookSidebar({ className }: NotebookSidebarProps) {
@@ -12,7 +14,7 @@ export default function NotebookSidebar({ className }: NotebookSidebarProps) {
 
   return (
     <div className={cn('border-border bg-background flex h-full w-64 flex-shrink-0 flex-col border-r', className)}>
-      <div className='border-border mx-2 flex items-center border-b p-4'>
+      <div className='border-border mx-2 flex items-center justify-between border-b p-4'>
         <h2 className='flex items-center text-lg font-medium'>
           <Book className='mr-2 h-5 w-5' />
           Workspace

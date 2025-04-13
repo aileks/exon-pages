@@ -15,7 +15,7 @@ interface MarkdownEditorProps {
   readOnly?: boolean;
 }
 
-export default function MarkdownEditor({
+export default function NotebookEditor({
   value,
   onChange,
   placeholder = 'Start typing here... Use Markdown syntax for formatting',
@@ -48,6 +48,7 @@ export default function MarkdownEditor({
             <Edit className='mr-1 h-4 w-4' />
             Edit
           </Button>
+
           <Button
             variant={mode === 'preview' ? 'default' : 'outline'}
             size='sm'
@@ -82,7 +83,7 @@ export default function MarkdownEditor({
             {editorContent ?
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
+                rehypePlugins={[[rehypeHighlight, { detect: true, ignoreMissing: true }]]}
               >
                 {htmlToMarkdown(editorContent)}
               </ReactMarkdown>

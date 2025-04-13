@@ -1,25 +1,12 @@
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import PageContainer from '@/components/PageContainer';
 import NotebookSidebar from '@/components/notebook/NotebookSidebar';
 import NotesPage from './NotesPage';
 import ExperimentsPage from './ExperimentsPage';
-import { useNotebookStore } from '@/store';
 
 export default function NotebookPage() {
   const location = useLocation();
-  const navigate = useNavigate();
   const currentPath = location.pathname;
-  const { setCurrentNote, setCurrentExperiment } = useNotebookStore();
-
-  const handleCreateNote = () => {
-    setCurrentNote(null);
-    navigate('/notebook/notes');
-  };
-
-  const handleCreateExperiment = () => {
-    setCurrentExperiment(null);
-    navigate('/notebook/experiments');
-  };
 
   const renderContent = () => {
     if (currentPath === '/notebook/notes') {
@@ -44,11 +31,8 @@ export default function NotebookPage() {
   return (
     <PageContainer className='p-0'>
       <div className='flex h-[calc(100vh-4rem)]'>
-        <NotebookSidebar
-          onCreateNote={handleCreateNote}
-          onCreateExperiment={handleCreateExperiment}
-        />
-        <div className='flex-1 overflow-auto p-6'>{renderContent()}</div>
+        <NotebookSidebar />
+        <div className='flex-1 overflow-auto p-4'>{renderContent()}</div>
       </div>
     </PageContainer>
   );
