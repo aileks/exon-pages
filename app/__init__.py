@@ -9,6 +9,8 @@ from flask_login import LoginManager
 from .models import db, User
 from .config import Config
 from .api.auth import auth
+from .api.notes import notes
+from .api.experiments import experiments
 
 app: Flask = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
 app.config.from_object(Config)
@@ -22,6 +24,8 @@ login_manager.init_app(app)
 
 
 app.register_blueprint(auth, url_prefix="/api/auth")
+app.register_blueprint(notes, url_prefix="/api/notes")
+app.register_blueprint(experiments, url_prefix="/api/experiments")
 
 
 @login_manager.user_loader

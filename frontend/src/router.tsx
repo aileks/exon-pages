@@ -3,8 +3,11 @@ import { lazy } from 'react';
 import App from './App';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 
-const HomeContainer = lazy(() => import('./pages/HomeContainer'));
+const HomeContainer = lazy(() => import('./components/HomeContainer'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
+const NotebookPage = lazy(() => import('./pages/NotebookPage'));
+const NotesPage = lazy(() => import('./pages/NotesPage'));
+const ExperimentsPage = lazy(() => import('./pages/ExperimentsPage'));
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,18 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <AuthPage />,
+      },
+      {
+        path: '/notebook',
+        element: <NotebookPage />,
+      },
+      {
+        path: '/notebook/notes',
+        element: <NotesPage />,
+      },
+      {
+        path: '/notebook/experiments',
+        element: <ExperimentsPage />,
       },
     ],
   },

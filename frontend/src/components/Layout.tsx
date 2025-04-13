@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 import ThemeToggle from '@/components/ThemeToggle';
+import { Book, FileText, FlaskConical } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -60,6 +61,25 @@ export default function Layout({ children }: LayoutProps) {
                             className={cn(
                               'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
                             )}
+                            href='/notebook'
+                          >
+                            <div className='flex items-center text-sm font-medium leading-none'>
+                              <Book className='mr-2 h-4 w-4' />
+                              Laboratory Notebook
+                            </div>
+                            <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
+                              Comprehensive lab notebook system for notes and experiments.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <a
+                            className={cn(
+                              'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                            )}
                             href='#'
                           >
                             <div className='text-sm font-medium leading-none'>DNA Analysis</div>
@@ -89,6 +109,61 @@ export default function Layout({ children }: LayoutProps) {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+
+                {user && (
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Notebook</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className='grid w-[200px] gap-2 p-4'>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <a
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                              )}
+                              href='/notebook'
+                            >
+                              <div className='flex items-center text-sm font-medium leading-none'>
+                                <Book className='mr-2 h-4 w-4' />
+                                All Notebooks
+                              </div>
+                            </a>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <a
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                              )}
+                              href='/notebook/notes'
+                            >
+                              <div className='flex items-center text-sm font-medium leading-none'>
+                                <FileText className='mr-2 h-4 w-4' />
+                                General Notes
+                              </div>
+                            </a>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <a
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                              )}
+                              href='/notebook/experiments'
+                            >
+                              <div className='flex items-center text-sm font-medium leading-none'>
+                                <FlaskConical className='mr-2 h-4 w-4' />
+                                Experiments
+                              </div>
+                            </a>
+                          </NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                )}
 
                 <NavigationMenuItem>
                   <Link to='/about'>
