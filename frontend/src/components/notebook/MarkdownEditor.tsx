@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
@@ -26,7 +26,10 @@ export default function MarkdownEditor({
   const [mode, setMode] = useState<'edit' | 'preview'>(readOnly ? 'preview' : 'edit');
   const [editorContent, setEditorContent] = useState(value);
 
-  // Create a simple plaintext editor
+  useEffect(() => {
+    setEditorContent(value);
+  }, [value]);
+
   const handleEditContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
     setEditorContent(newContent);

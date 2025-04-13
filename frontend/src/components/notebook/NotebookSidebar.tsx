@@ -1,42 +1,31 @@
 import { Link, useLocation } from 'react-router';
 import { cn } from '@/lib/utils';
-import { Book, ChevronDown, Clock, FileText, FlaskConical, PlusCircle, Star, Tag, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Book, Clock, FileText, FlaskConical, Star, Tag, Trash2 } from 'lucide-react';
 
 interface NotebookSidebarProps {
   className?: string;
-  onCreateNote?: () => void;
-  onCreateExperiment?: () => void;
 }
 
-export default function NotebookSidebar({ className, onCreateNote, onCreateExperiment }: NotebookSidebarProps) {
+export default function NotebookSidebar({ className }: NotebookSidebarProps) {
   const location = useLocation();
   const currentPath = location.pathname;
 
   return (
     <div className={cn('border-border bg-background flex h-full w-64 flex-shrink-0 flex-col border-r', className)}>
-      <div className='border-border flex items-center justify-between border-b p-4'>
+      <div className='border-border mx-2 flex items-center border-b p-4'>
         <h2 className='flex items-center text-lg font-medium'>
           <Book className='mr-2 h-5 w-5' />
           Workspace
         </h2>
-        <Button
-          variant='ghost'
-          size='icon'
-          className='rounded-sm'
-        >
-          <PlusCircle className='h-4 w-4' />
-        </Button>
       </div>
 
       <div className='flex-grow overflow-y-auto p-2'>
         {/* Quick Links */}
-        <div className='mb-2 px-2 py-1'>
+        <div className='mb-4 border-b px-2 py-1'>
           <Link
             to='/notebook'
             className={cn(
-              'flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm',
+              'mb-2 flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm',
               currentPath === '/notebook' ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'
             )}
           >
@@ -45,27 +34,9 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
           </Link>
         </div>
 
-        <Separator className='my-2' />
-
         {/* Notes Section */}
         <div className='mb-4'>
-          <div className='text-muted-foreground mb-2 flex items-center justify-between px-2 text-xs font-medium'>
-            <span className='flex items-center'>
-              <ChevronDown className='mr-1 h-3 w-3' />
-              NOTES
-            </span>
-
-            {onCreateNote && (
-              <Button
-                variant='ghost'
-                size='icon'
-                onClick={onCreateNote}
-                className='h-5 w-5 rounded-sm p-0'
-              >
-                <PlusCircle className='h-4 w-4' />
-              </Button>
-            )}
-          </div>
+          <p className='text-muted-foreground mb-2 px-2 text-xs font-semibold'>NOTES</p>
 
           <Link
             to='/notebook/notes'
@@ -81,10 +52,7 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
           <div className='mt-1 space-y-1 pl-4'>
             <Link
               to='/notebook/notes?filter=recent'
-              className={cn(
-                'flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs',
-                'hover:bg-accent/50 text-muted-foreground'
-              )}
+              className='text-muted-foreground hover:bg-accent/50 flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs'
             >
               <Clock className='h-3 w-3' />
               Recent
@@ -92,10 +60,7 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
 
             <Link
               to='/notebook/notes?filter=favorites'
-              className={cn(
-                'flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs',
-                'hover:bg-accent/50 text-muted-foreground'
-              )}
+              className='text-muted-foreground hover:bg-accent/50 flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs'
             >
               <Star className='h-3 w-3' />
               Favorites
@@ -103,10 +68,7 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
 
             <Link
               to='/notebook/notes?filter=tags'
-              className={cn(
-                'flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs',
-                'hover:bg-accent/50 text-muted-foreground'
-              )}
+              className='text-muted-foreground hover:bg-accent/50 flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs'
             >
               <Tag className='h-3 w-3' />
               Tags
@@ -114,25 +76,8 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
           </div>
         </div>
 
-        {/* Experiments Section */}
         <div className='mb-4'>
-          <div className='text-muted-foreground mb-2 flex items-center justify-between px-2 text-xs font-medium'>
-            <span className='flex items-center'>
-              <ChevronDown className='mr-1 h-3 w-3' />
-              EXPERIMENTS
-            </span>
-
-            {onCreateExperiment && (
-              <Button
-                variant='ghost'
-                size='icon'
-                onClick={onCreateExperiment}
-                className='h-5 w-5 rounded-sm p-0'
-              >
-                <PlusCircle className='h-4 w-4' />
-              </Button>
-            )}
-          </div>
+          <p className='text-muted-foreground mb-2 px-2 text-xs font-semibold'>EXPERIMENTS</p>
 
           <Link
             to='/notebook/experiments'
@@ -148,10 +93,7 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
           <div className='mt-1 space-y-1 pl-4'>
             <Link
               to='/notebook/experiments?status=planned'
-              className={cn(
-                'flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs',
-                'hover:bg-accent/50 text-muted-foreground'
-              )}
+              className='text-muted-foreground hover:bg-accent/50 flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs'
             >
               <span className='h-2 w-2 rounded-full bg-gray-400'></span>
               Planned
@@ -159,10 +101,7 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
 
             <Link
               to='/notebook/experiments?status=in_progress'
-              className={cn(
-                'flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs',
-                'hover:bg-accent/50 text-muted-foreground'
-              )}
+              className='text-muted-foreground hover:bg-accent/50 flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs'
             >
               <span className='h-2 w-2 rounded-full bg-blue-400'></span>
               In Progress
@@ -170,10 +109,7 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
 
             <Link
               to='/notebook/experiments?status=completed'
-              className={cn(
-                'flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs',
-                'hover:bg-accent/50 text-muted-foreground'
-              )}
+              className='text-muted-foreground hover:bg-accent/50 flex w-full items-center gap-2 rounded-md px-2 py-1 text-xs'
             >
               <span className='h-2 w-2 rounded-full bg-green-400'></span>
               Completed
@@ -181,15 +117,10 @@ export default function NotebookSidebar({ className, onCreateNote, onCreateExper
           </div>
         </div>
 
-        <Separator className='my-2' />
-
-        <div className='px-2 py-1'>
+        <div className='border-t px-2 pt-2'>
           <Link
             to='/notebook/trash'
-            className={cn(
-              'text-muted-foreground flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm',
-              'hover:bg-accent/50'
-            )}
+            className='text-muted-foreground hover:bg-accent/50 flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm'
           >
             <Trash2 className='h-4 w-4' />
             Trash
