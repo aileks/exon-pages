@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Note } from '@/lib/notebookApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import TextEditor from './TextEditor';
 import { Save, Trash2, X } from 'lucide-react';
 
@@ -99,12 +100,12 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
 
       <div className='flex-grow space-y-4 overflow-auto pb-4'>
         <div>
-          <label
+          <Label
             htmlFor='title'
-            className='text-foreground mb-1 block text-sm font-medium'
+            className='mb-1 block text-sm font-medium'
           >
             Title
-          </label>
+          </Label>
           <Input
             id='title'
             value={title}
@@ -115,7 +116,7 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
         </div>
 
         <div>
-          <label className='text-foreground mb-1 block text-sm font-medium'>Content</label>
+          <Label className='mb-1 block text-sm font-medium'>Content</Label>
           <TextEditor
             value={content}
             onChange={setContent}
@@ -124,7 +125,7 @@ export default function NoteEditor({ note, isNew = false, onSave, onDelete, onCa
         </div>
 
         <div>
-          <label className='text-foreground mb-1 block text-sm font-medium'>Tags</label>
+          <Label className='mb-1 block text-sm font-medium'>Tags</Label>
           <div className='mb-2 flex flex-wrap gap-2'>
             {tags.map(tag => (
               <div

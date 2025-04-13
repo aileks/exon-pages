@@ -3,11 +3,12 @@ import { lazy } from 'react';
 import App from './App';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 
-const HomeContainer = lazy(() => import('./components/HomeContainer'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ExperimentsPage = lazy(() => import('./pages/ExperimentsPage'));
+const HomeContainer = lazy(() => import('./components/HomeContainer'));
 const NotebookPage = lazy(() => import('./pages/NotebookPage'));
 const NotesPage = lazy(() => import('./pages/NotesPage'));
-const ExperimentsPage = lazy(() => import('./pages/ExperimentsPage'));
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/notebook/experiments',
         element: <ExperimentsPage />,
+      },
+      {
+        path: '/about',
+        element: <AboutPage />,
       },
     ],
   },

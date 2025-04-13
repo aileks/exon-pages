@@ -10,16 +10,7 @@ export default function NotebookPage() {
 
   return (
     <PageContainer>
-      <div className='mx-auto max-w-6xl'>
-        <h1 className='mb-6 text-4xl font-bold'>
-          Laboratory Notebook <span className='text-primary'>System</span>
-        </h1>
-
-        <p className='text-muted-foreground mb-8 max-w-3xl'>
-          Document your research with our comprehensive laboratory notebook system. Keep track of general notes and
-          experimental procedures in one place.
-        </p>
-
+      <div className='mx-auto'>
         <Tabs
           value={activeTab}
           onValueChange={value => setActiveTab(value as 'notes' | 'experiments')}

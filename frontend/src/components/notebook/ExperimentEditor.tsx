@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Experiment } from '@/lib/notebookApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import TextEditor from './TextEditor';
 import {
   AlertCircle,
@@ -231,12 +232,12 @@ export default function ExperimentEditor({
           >
             <div className='space-y-4'>
               <div>
-                <label
+                <Label
                   htmlFor='title'
-                  className='text-foreground mb-1 block text-sm font-medium'
+                  className='mb-1 block text-sm font-medium'
                 >
                   Title*
-                </label>
+                </Label>
                 <Input
                   id='title'
                   value={title}
@@ -247,7 +248,7 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <label className='text-foreground mb-1 block text-sm font-medium'>Status</label>
+                <Label className='mb-1 block text-sm font-medium'>Status</Label>
                 <div className='flex flex-wrap gap-2'>
                   <Button
                     variant={status === 'planned' ? 'default' : 'outline'}
@@ -285,7 +286,7 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <label className='text-foreground mb-1 block text-sm font-medium'>Hypothesis*</label>
+                <Label className='mb-1 block text-sm font-medium'>Hypothesis*</Label>
                 <TextEditor
                   value={hypothesis}
                   onChange={setHypothesis}
@@ -295,7 +296,7 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <label className='text-foreground mb-1 block text-sm font-medium'>Materials</label>
+                <Label className='mb-1 block text-sm font-medium'>Materials</Label>
                 <TextEditor
                   value={materials}
                   onChange={setMaterials}
@@ -305,7 +306,7 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <label className='text-foreground mb-1 block text-sm font-medium'>Methods*</label>
+                <Label className='mb-1 block text-sm font-medium'>Methods*</Label>
                 <TextEditor
                   value={methods}
                   onChange={setMethods}
@@ -393,7 +394,7 @@ export default function ExperimentEditor({
                       )}
 
                       <div className='mb-3'>
-                        <label className='text-foreground mb-1 block text-sm font-medium'>Description*</label>
+                        <Label className='mb-1 block text-sm font-medium'>Description*</Label>
                         <TextEditor
                           value={step.description}
                           onChange={value => handleUpdateStep(index, 'description', value)}
@@ -403,7 +404,7 @@ export default function ExperimentEditor({
                       </div>
 
                       <div>
-                        <label className='text-foreground mb-1 block text-sm font-medium'>Observations</label>
+                        <Label className='mb-1 block text-sm font-medium'>Observations</Label>
                         <TextEditor
                           value={step.observation}
                           onChange={value => handleUpdateStep(index, 'observation', value)}
@@ -424,7 +425,7 @@ export default function ExperimentEditor({
           >
             <div className='space-y-4'>
               <div>
-                <label className='text-foreground mb-1 block text-sm font-medium'>Results</label>
+                <Label className='mb-1 block text-sm font-medium'>Results</Label>
                 <TextEditor
                   value={results}
                   onChange={setResults}
@@ -434,7 +435,7 @@ export default function ExperimentEditor({
               </div>
 
               <div>
-                <label className='text-foreground mb-1 block text-sm font-medium'>Conclusion</label>
+                <Label className='mb-1 block text-sm font-medium'>Conclusion</Label>
                 <TextEditor
                   value={conclusion}
                   onChange={setConclusion}
@@ -450,7 +451,7 @@ export default function ExperimentEditor({
             className='mt-0 h-full'
           >
             <div>
-              <label className='text-foreground mb-1 block text-sm font-medium'>References & Citations</label>
+              <Label className='mb-1 block text-sm font-medium'>References & Citations</Label>
               <TextEditor
                 value={references}
                 onChange={setReferences}

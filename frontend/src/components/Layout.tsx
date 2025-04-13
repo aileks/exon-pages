@@ -36,79 +36,81 @@ export default function Layout({ children }: LayoutProps) {
 
             <NavigationMenu>
               <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+                {!user && (
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Features</NavigationMenuTrigger>
 
-                  <NavigationMenuContent>
-                    <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
-                      <li className='row-span-3'>
-                        <NavigationMenuLink asChild>
-                          <a
-                            className='from-primary/10 to-primary/20 flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none focus:shadow-md'
-                            href='/'
-                          >
-                            <div className='text-lg font-medium'>Exon Pages</div>
-                            <p className='text-muted-foreground text-sm leading-tight'>
-                              Cutting-edge biology data management platform.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
+                    <NavigationMenuContent>
+                      <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
+                        <li className='row-span-3'>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              className='from-primary/10 to-primary/20 flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none focus:shadow-md'
+                              to='/'
+                            >
+                              <div className='text-lg font-medium'>Exon Pages</div>
+                              <p className='text-muted-foreground text-sm leading-tight'>
+                                Cutting-edge biology data management platform.
+                              </p>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
 
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <a
-                            className={cn(
-                              'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
-                            )}
-                            href='/notebook'
-                          >
-                            <div className='flex items-center text-sm font-medium leading-none'>
-                              <Book className='mr-2 h-4 w-4' />
-                              Laboratory Notebook
-                            </div>
-                            <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
-                              Comprehensive lab notebook system for notes and experiments.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                              )}
+                              to='/notebook'
+                            >
+                              <div className='flex items-center text-sm font-medium leading-none'>
+                                <Book className='mr-2 h-4 w-4' />
+                                Laboratory Notebook
+                              </div>
+                              <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
+                                Comprehensive lab notebook system for notes and experiments.
+                              </p>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
 
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <a
-                            className={cn(
-                              'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
-                            )}
-                            href='#'
-                          >
-                            <div className='text-sm font-medium leading-none'>DNA Analysis</div>
-                            <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
-                              Advanced tools for DNA sequence analysis.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                              )}
+                              to='#'
+                            >
+                              <div className='text-sm font-medium leading-none'>DNA Analysis</div>
+                              <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
+                                Advanced tools for DNA sequence analysis.
+                              </p>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
 
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <a
-                            className={cn(
-                              'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
-                            )}
-                            href='#'
-                          >
-                            <div className='text-sm font-medium leading-none'>Protein Visualization</div>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              className={cn(
+                                'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
+                              )}
+                              to='#'
+                            >
+                              <div className='text-sm font-medium leading-none'>Protein Visualization</div>
 
-                            <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
-                              Interactive 3D protein structure models.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+                              <p className='text-muted-foreground line-clamp-2 text-sm leading-snug'>
+                                Interactive 3D protein structure models.
+                              </p>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                )}
 
                 {user && (
                   <NavigationMenuItem>
@@ -117,47 +119,47 @@ export default function Layout({ children }: LayoutProps) {
                       <ul className='grid w-[200px] gap-2 p-4'>
                         <li>
                           <NavigationMenuLink asChild>
-                            <a
+                            <Link
                               className={cn(
                                 'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
                               )}
-                              href='/notebook'
+                              to='/notebook'
                             >
                               <div className='flex items-center text-sm font-medium leading-none'>
                                 <Book className='mr-2 h-4 w-4' />
                                 All Notebooks
                               </div>
-                            </a>
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <a
+                            <Link
                               className={cn(
                                 'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
                               )}
-                              href='/notebook/notes'
+                              to='/notebook/notes'
                             >
                               <div className='flex items-center text-sm font-medium leading-none'>
                                 <FileText className='mr-2 h-4 w-4' />
                                 General Notes
                               </div>
-                            </a>
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                         <li>
                           <NavigationMenuLink asChild>
-                            <a
+                            <Link
                               className={cn(
                                 'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors'
                               )}
-                              href='/notebook/experiments'
+                              to='/notebook/experiments'
                             >
                               <div className='flex items-center text-sm font-medium leading-none'>
                                 <FlaskConical className='mr-2 h-4 w-4' />
                                 Experiments
                               </div>
-                            </a>
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                       </ul>

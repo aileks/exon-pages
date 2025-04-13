@@ -30,9 +30,8 @@ export default function LandingPage() {
           <Button
             variant='secondary'
             size='lg'
-            asChild
           >
-            <a href='#features'>Explore Features</a>
+            <Link to='#features'>Explore Features</Link>
           </Button>
         </div>
       </div>
