@@ -1,4 +1,4 @@
-FROM python:3.11-alpine3.21
+FROM python:3.9.18-alpine3.18
 
 RUN apk add build-base
 
@@ -15,9 +15,10 @@ WORKDIR /var/www
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt
-RUN pip install psycopg2-binary
+RUN pip install psycopg2
 
 COPY . .
 
 RUN flask db upgrade
+RUN flask seed all
 CMD gunicorn app:app
