@@ -7,7 +7,7 @@
     "npm": "11.x"
   },
   "scripts": {
-    "build": "cd frontend && npm install && npm run build"
+    "build": "cd frontend && npm install && npm install tsc && tsc -b && npx vite build"
   },
   "cacheDirectories": [
     "frontend/node_modules"
