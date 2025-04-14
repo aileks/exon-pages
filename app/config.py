@@ -2,16 +2,14 @@ import os
 
 
 class Config:
-    SECRET_KEY: str = (
+    SECRET_KEY = (
         os.environ.get("SECRET_KEY")
         or "app-dev-key-that-should-not-be-used-in-production"
     )
     FLASK_RUN_PORT: str | int = os.environ.get("FLASK_RUN_PORT", 8000)
 
-    SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
-    db_url: str = os.environ.get("DATABASE_URL")
-    if db_url and db_url.startswith("postgres://"):
-        SQLALCHEMY_DATABASE_URI: str = db_url.replace("postgres://", "postgresql://")
-    else:
-        SQLALCHEMY_DATABASE_URI: str = db_url
-    SQLALCHEMY_ECHO: bool = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL").replace(  # pyright: ignore
+        "postgres://", "postgresql://"
+    )
+    SQLALCHEMY_ECHO = True
