@@ -6,6 +6,8 @@ class Config:
     FLASK_RUN_PORT: str | int = os.environ.get("FLASK_RUN_PORT", 8000)
     SQLALCHEMY_ECHO = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL").replace(  # pyright: ignore
-        "postgres://", "postgresql://"
-    )
+
+    db_url = os.environ.get("DATABASE_URL") or "sqlite:///dev.db"
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
+    SQLALCHEMY_DATABASE_URI = db_url
