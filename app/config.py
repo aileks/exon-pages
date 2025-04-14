@@ -9,5 +9,5 @@ class Config:
 
     db_url = os.environ.get("DATABASE_URL") or "sqlite:///dev.db"
     if db_url.startswith("postgres://"):
-        db_url = db_url.replace("postgres://", "postgresql://", 1)
+        db_url = db_url.replace("postgres://", "postgresql://") + "?sslmode=require"
     SQLALCHEMY_DATABASE_URI = db_url
