@@ -1,6 +1,8 @@
-from typing import cast
+import os
 import uuid
 import traceback
+
+from typing import cast
 from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -13,6 +15,13 @@ from .api.auth import auth
 from .api.notes import notes
 from .api.experiments import experiments
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+static_folder = os.path.join(project_root, "frontend", "dist")
+print(f"\n\nSetting static folder to: {static_folder}")
+print(f"\n\nStatic folder exists: {os.path.exists(static_folder)}")
+if os.path.exists(static_folder):
+    print(f"\n\nStatic folder contents: {os.listdir(static_folder)}")
 app: Flask = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
 app.config.from_object(Config)
 csrf = CSRFProtect(app)

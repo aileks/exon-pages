@@ -10,7 +10,6 @@ blinker = "*"
 click = "*"
 flask = "*"
 flask-cors = "*"
-flask-login = "*"
 flask-migrate = "*"
 flask-sqlalchemy = "*"
 flask-wtf = "*"
@@ -33,6 +32,7 @@ tzdata = "*"
 werkzeug = "*"
 wtforms = "*"
 psycopg2 = "*"
+flask-login = "*"
 
 [dev-packages]
 
