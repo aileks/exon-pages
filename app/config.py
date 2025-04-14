@@ -1,8 +1,12 @@
 import os
 
+
 class Config:
-    SECRET_KEY: str = os.environ.get('SECRET_KEY') or "app-dev-key-that-should-not-be-used-in-production"
-    FLASK_RUN_PORT: str | int = os.environ.get("FLASK_RUN_PORT", 3000)
+    SECRET_KEY: str = (
+        os.environ.get("SECRET_KEY")
+        or "app-dev-key-that-should-not-be-used-in-production"
+    )
+    FLASK_RUN_PORT: str | int = os.environ.get("FLASK_RUN_PORT", 8000)
 
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
     db_url: str | None = os.environ.get("DATABASE_URL")

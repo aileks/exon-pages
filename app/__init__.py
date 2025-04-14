@@ -18,7 +18,7 @@ app.config.from_object(Config)
 csrf = CSRFProtect(app)
 db.init_app(app)
 Migrate(app, db)
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+CORS(app, origins=["http://localhost:8000"], supports_credentials=True)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -62,12 +62,12 @@ def handle_unauthorized(e) -> tuple[Response, int]:
 
 
 @app.errorhandler(403)
-def handle_forbidden(e) -> tuple[Response, int]:
+def handle_forbidden(_) -> tuple[Response, int]:
     return jsonify({"error": "Forbidden", "status_code": 403}), 403
 
 
 @app.errorhandler(405)
-def handle_method_not_allowed(e) -> tuple[Response, int]:
+def handle_method_not_allowed(_) -> tuple[Response, int]:
     return jsonify({"error": "Method not allowed", "status_code": 405}), 405
 
 
