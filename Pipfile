@@ -32,6 +32,7 @@ typing-extensions = "*"
 tzdata = "*"
 werkzeug = "*"
 wtforms = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
