@@ -6,8 +6,7 @@
     "pnpm": "10.x"
   },
   "scripts": {
-    "build": "cd frontend && pnpm install && pnpm build",
-    "postinstall": "npm run build"
+    "build": "cd frontend && pnpm install && pnpm build"
   },
   "cacheDirectories": [
     "frontend/node_modules"
