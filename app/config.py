@@ -1,10 +1,9 @@
 import os
-from urllib.parse import urlparse, parse_qs, urlencode
 
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    FLASK_RUN_PORT: str | int = os.environ.get("FLASK_RUN_PORT", 8000)
+    FLASK_RUN_PORT = os.environ.get("FLASK_RUN_PORT", 8000)
     SQLALCHEMY_ECHO = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL").replace(
