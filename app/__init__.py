@@ -15,7 +15,7 @@ from .api.auth import auth
 from .api.notes import notes
 from .api.experiments import experiments
 
-app: Flask = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
+app: Flask = Flask(__name__, static_folder="./dist", static_url_path="/")
 app.config.from_object(Config)
 csrf = CSRFProtect(app)
 db.init_app(app)
