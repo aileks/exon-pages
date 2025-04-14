@@ -15,8 +15,8 @@ export function Loading({ fullScreen = false, className, size = 'md' }: LoadingP
 
   const containerClass =
     fullScreen ?
-      'fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm'
-    : 'flex items-center justify-center py-6';
+      'fixed inset-0 z-50 flex items-center justify-center overflow-clip bg-background/80 backdrop-blur-sm'
+    : 'flex items-center justify-center py-6 overflow-clip';
 
   return (
     <div className={cn(containerClass, className)}>
