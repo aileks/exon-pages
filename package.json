@@ -1,0 +1,14 @@
+{
+  "name": "exon-pages",
+  "version": "0.0.1",
+  "description": "A web-based lab notebook for biology",
+  "engines": {
+    "pnpm": "10.x"
+  },
+  "scripts": {
+    "build": "cd frontend && pnpm install && pnpm build"
+  },
+  "cacheDirectories": [
+    "frontend/node_modules"
+  ]
+}
