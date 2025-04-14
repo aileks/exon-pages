@@ -9,7 +9,6 @@ Create Date: 2025-04-13 16:17:59.915959
 from alembic import op
 import sqlalchemy as sa
 
-from app.models.db import environment, SCHEMA
 
 # revision identifiers, used by Alembic.
 revision = "930723eebc8b"
@@ -89,12 +88,6 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("id"),
     )
-    if environment == "prod":
-        op.execute(f"ALTER TABLE experiments SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE notes SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE experiment_attachments SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE experiment_steps SET SCHEMA {SCHEMA};")
-
     # ### end Alembic commands ###
 
 

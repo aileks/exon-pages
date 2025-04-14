@@ -1,12 +1,11 @@
 import uuid
 from datetime import datetime
-from .db import db, environment, SCHEMA
+from .db import db, SCHEMA
 
 
 class Note(db.Model):
     __tablename__ = "notes"
-    if environment == "prod":
-        __table_args__ = {"schema": SCHEMA}
+    __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = db.Column(
@@ -36,8 +35,7 @@ class Note(db.Model):
 
 class Experiment(db.Model):
     __tablename__ = "experiments"
-    if environment == "prod":
-        __table_args__ = {"schema": SCHEMA}
+    __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = db.Column(
@@ -95,8 +93,7 @@ class Experiment(db.Model):
 
 class ExperimentStep(db.Model):
     __tablename__ = "experiment_steps"
-    if environment == "prod":
-        __table_args__ = {"schema": SCHEMA}
+    __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     experiment_id = db.Column(
@@ -132,8 +129,7 @@ class ExperimentStep(db.Model):
 
 class ExperimentAttachment(db.Model):
     __tablename__ = "experiment_attachments"
-    if environment == "prod":
-        __table_args__ = {"schema": SCHEMA}
+    __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     experiment_id = db.Column(

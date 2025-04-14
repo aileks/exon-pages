@@ -3,18 +3,17 @@ import uuid
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from .db import db, environment, SCHEMA
+from .db import db, SCHEMA
 
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
-    if environment == "prod":
-        __table_args__ = {"schema": SCHEMA}
+    __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    hashed_password = db.Column(db.String(128), nullable=False)
+    hashed_password = db.Column(db.String(255), nullable=False)
 
     notes = db.relationship("Note", back_populates="user", cascade="all, delete-orphan")
     experiments = db.relationship(

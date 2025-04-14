@@ -9,7 +9,7 @@ Create Date: 2025-04-12 11:59:10.253747
 from alembic import op
 import sqlalchemy as sa
 
-from app.models.db import environment, SCHEMA
+from app.models.db import SCHEMA
 
 # revision identifiers, used by Alembic.
 revision = "3e891c5be1c6"
@@ -30,8 +30,7 @@ def upgrade():
         sa.UniqueConstraint("email"),
         sa.UniqueConstraint("username"),
     )
-    if environment == "prod":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+    op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
