@@ -1,0 +1,1 @@
+import{j as n,c as r}from"./index-D2gzIJPi.js";const o={default:"container mx-auto px-4 py-8",centered:"container mx-auto flex min-h-[calc(100vh-4rem)] items-center justify-center px-4",narrow:"container mx-auto max-w-2xl px-4 py-8"};function c({children:e,className:t,variant:a="default"}){return n.jsx("div",{className:r(o[a],t),children:e})}export{c as P};
