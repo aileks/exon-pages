@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -7,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useNavigate } from 'react-router';
 import Loading from '@/components/Loading';
-import useAuthStore from '@/store/useAuthStore';
+import { useAuth } from '@/services/auth';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Email is required').email('Invalid email address'),
@@ -18,8 +17,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const { login, isLoading } = useAuthStore();
-  const [formError, setFormError] = useState<string | null>(null);
+  const { login, isLoading, error } = useAuth();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -31,23 +29,21 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      setFormError(null);
       await login(data.email, data.password);
       navigate('/');
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setFormError(err?.data?.error || 'Login failed. Please try again.');
+      // Error is handled in the auth service
     }
   };
 
   const handleDemoLogin = async () => {
     try {
-      setFormError(null);
       await login('demo@exon.pages', 'password');
       navigate('/');
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setFormError(err?.data?.error || 'Login failed. Please try again.');
+      // Error is handled in the auth service
     }
   };
 
@@ -57,7 +53,7 @@ export default function LoginForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className='space-y-6'
       >
-        {formError && <div className='bg-destructive/10 text-destructive mb-4 rounded-md p-3 text-sm'>{formError}</div>}
+        {error && <div className='bg-destructive/10 text-destructive mb-4 rounded-md p-3 text-sm'>{error}</div>}
 
         <FormField
           control={form.control}

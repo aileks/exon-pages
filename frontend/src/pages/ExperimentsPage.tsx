@@ -3,8 +3,7 @@ import PageContainer from '@/components/PageContainer';
 import ExperimentsList from '@/components/notebook/ExperimentsList';
 import ExperimentEditor from '@/components/notebook/ExperimentEditor';
 import Loading from '@/components/Loading';
-import { Experiment } from '@/lib/notebookApi';
-import { useNotebookStore } from '@/store';
+import { Experiment, useExperiments } from '@/services/notebook';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Beaker, FileText, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
@@ -21,20 +20,20 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
   const {
     experiments,
     currentExperiment,
-    isLoadingExperiments,
-    fetchExperiments,
+    isLoading,
+    refetchExperiments,
     createExperiment,
     updateExperiment,
     deleteExperiment,
     setCurrentExperiment,
-  } = useNotebookStore();
+  } = useExperiments();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
-    fetchExperiments();
-  }, [fetchExperiments]);
+    refetchExperiments();
+  }, [refetchExperiments]);
 
   const handleSelectExperiment = (experiment: Experiment) => {
     setCurrentExperiment(experiment);
@@ -112,7 +111,7 @@ export default function ExperimentsPage({ sidebarMode = false }: ExperimentsPage
     }
   };
 
-  if (isLoadingExperiments && experiments.length === 0) {
+  if (isLoading && experiments.length === 0) {
     return <Loading />;
   }
 

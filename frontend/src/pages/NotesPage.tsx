@@ -3,8 +3,7 @@ import PageContainer from '@/components/PageContainer';
 import NotesList from '@/components/notebook/NotesList';
 import NoteEditor from '@/components/notebook/NoteEditor';
 import Loading from '@/components/Loading';
-import { Note } from '@/lib/notebookApi';
-import { useNotebookStore } from '@/store';
+import { Note, useNotes } from '@/services/notebook';
 import { Button } from '@/components/ui/button.tsx';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
@@ -16,15 +15,15 @@ interface NotesPageProps {
 }
 
 export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
-  const { notes, currentNote, isLoadingNotes, fetchNotes, createNote, updateNote, deleteNote, setCurrentNote } =
-    useNotebookStore();
+  const { notes, currentNote, isLoading, refetchNotes, createNote, updateNote, deleteNote, setCurrentNote } =
+    useNotes();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
-    fetchNotes();
-  }, [fetchNotes]);
+    refetchNotes();
+  }, [refetchNotes]);
 
   const handleSelectNote = (note: Note) => {
     setCurrentNote(note);
@@ -73,7 +72,7 @@ export default function NotesPage({ sidebarMode = false }: NotesPageProps) {
     setIsCreating(false);
   };
 
-  if (isLoadingNotes && notes.length === 0) {
+  if (isLoading && notes.length === 0) {
     return <Loading />;
   }
 

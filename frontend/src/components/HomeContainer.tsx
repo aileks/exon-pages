@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
-import { useAuthStore } from '@/store';
+import { useAuth } from '@/services/auth';
 import Loading from '@/components/Loading.tsx';
 import LandingPage from '../pages/LandingPage.tsx';
 import HomePage from '../pages/HomePage.tsx';
 
 export default function HomeContainer() {
-  const { isAuthenticated, getUser, isLoading } = useAuthStore();
+  const { getCurrentUser, isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
-    getUser();
-  }, [getUser]);
+    getCurrentUser();
+  }, [getCurrentUser]);
 
   if (isLoading) {
     return <Loading />;

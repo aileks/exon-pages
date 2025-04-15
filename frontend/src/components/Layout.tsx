@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Link } from 'react-router';
-import useAuthStore from '@/store/useAuthStore';
+import { useAuth } from '@/services/auth';
 import Loading from '@/components/Loading';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,7 +20,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { user, logout, isLoading } = useAuthStore();
+  const { user, logout, isLoading } = useAuth();
 
   return (
     <div className='bg-background flex min-h-screen flex-col'>

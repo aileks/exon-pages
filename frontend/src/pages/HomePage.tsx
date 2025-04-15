@@ -2,11 +2,11 @@ import { Link } from 'react-router';
 import PageContainer from '@/components/PageContainer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuthStore } from '@/store';
 import { Book, FileText, FlaskConical } from 'lucide-react';
+import { useAuth } from '@/services/auth';
 
 export default function HomePage() {
-  const { user } = useAuthStore();
+  const { user } = useAuth();
 
   return (
     <PageContainer>

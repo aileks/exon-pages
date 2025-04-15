@@ -2,20 +2,20 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import Layout from './components/Layout';
 import { ErrorBoundary } from './ErrorBoundary';
-import useAuthStore from '@/store/useAuthStore';
 import Loading from '@/components/Loading';
+import { useAuth } from '@/services/auth';
 
 function App() {
-  const { getUser, isLoading } = useAuthStore();
+  const { getCurrentUser, isLoading } = useAuth();
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     if (!initialized) {
-      getUser().finally(() => {
+      getCurrentUser().finally(() => {
         setInitialized(true);
       });
     }
-  }, [initialized, getUser]);
+  }, [initialized, getCurrentUser]);
 
   if (!initialized && isLoading) {
     return (

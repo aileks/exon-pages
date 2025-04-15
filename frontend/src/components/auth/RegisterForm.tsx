@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -7,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router';
 import Loading from '@/components/Loading';
-import { useAuthStore } from '@/store';
+import { useAuth } from '@/services/auth';
 
 const registerSchema = z
   .object({
@@ -33,8 +32,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function RegisterForm() {
   const navigate = useNavigate();
-  const { register, isLoading } = useAuthStore();
-  const [formError, setFormError] = useState<string | null>(null);
+  const { register, isLoading, error } = useAuth();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -48,12 +46,11 @@ export default function RegisterForm() {
 
   const onSubmit = async (data: RegisterFormValues) => {
     try {
-      setFormError(null);
-      await register(data.username, data.email, data.password, data.confirmPassword);
+      await register(data.username, data.email, data.password);
       navigate('/');
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setFormError(err?.data?.error || 'Registration failed. Please try again.');
+      // Error is handled in the auth service
     }
   };
 
@@ -63,7 +60,7 @@ export default function RegisterForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className='space-y-6'
       >
-        {formError && <div className='bg-destructive/10 text-destructive mb-4 rounded-md p-3 text-sm'>{formError}</div>}
+        {error && <div className='bg-destructive/10 text-destructive mb-4 rounded-md p-3 text-sm'>{error}</div>}
 
         <FormField
           control={form.control}
