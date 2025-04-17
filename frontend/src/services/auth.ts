@@ -77,12 +77,10 @@ const makeRequest = async <T>(endpoint: string, method: string = 'GET', data?: u
   return response.json();
 };
 
-// Auth service hooks
 export function useAuth() {
   const queryClient = useQueryClient();
   const [error, setError] = useState<string | null>(null);
 
-  // Get current user
   const {
     data: user,
     isLoading: isLoadingUser,
@@ -92,11 +90,10 @@ export function useAuth() {
     queryKey: ['currentUser'],
     queryFn: () => makeRequest<User>('/auth/me'),
     retry: false,
-    enabled: false, // Don't run automatically
-    staleTime: Infinity, // Don't refetch automatically
+    enabled: false,
+    staleTime: Infinity,
   });
 
-  // Login mutation
   const loginMutation = useMutation({
     mutationFn: (credentials: LoginCredentials) => makeRequest<User>('/auth/login', 'POST', credentials),
     onSuccess: data => {
@@ -108,7 +105,6 @@ export function useAuth() {
     },
   });
 
-  // Register mutation
   const registerMutation = useMutation({
     mutationFn: (data: RegisterData) => makeRequest<User>('/auth/register', 'POST', data),
     onSuccess: data => {
@@ -120,7 +116,6 @@ export function useAuth() {
     },
   });
 
-  // Logout mutation
   const logoutMutation = useMutation({
     mutationFn: () => makeRequest<{ message: string }>('/auth/logout', 'DELETE'),
     onSuccess: () => {
@@ -135,44 +130,28 @@ export function useAuth() {
     },
   });
 
-  // Function to get current user
   const getCurrentUser = async () => {
     try {
       const result = await refetch();
       return !!result.data;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_) {
       return false;
     }
   };
 
-  // Function to login
   const login = async (email: string, password: string) => {
-    try {
-      await loginMutation.mutateAsync({ email, password });
-    } catch (error) {
-      throw error;
-    }
+    await loginMutation.mutateAsync({ email, password });
   };
 
-  // Function to register
   const register = async (username: string, email: string, password: string) => {
-    try {
-      await registerMutation.mutateAsync({ username, email, password });
-    } catch (error) {
-      throw error;
-    }
+    await registerMutation.mutateAsync({ username, email, password });
   };
 
-  // Function to logout
   const logout = async () => {
-    try {
-      await logoutMutation.mutateAsync();
-    } catch (error) {
-      throw error;
-    }
+    await logoutMutation.mutateAsync();
   };
 
-  // Clear error function
   const clearError = () => setError(null);
 
   return {
